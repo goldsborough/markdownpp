@@ -59,7 +59,7 @@ namespace Markdown
 	{
 		// extract math, leave comment-markers
 		
-		
+		return {};
 	}
 	
 	const Markdown& Parser::markdown() const

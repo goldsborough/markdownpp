@@ -24,13 +24,6 @@ namespace Markdown
 			{ }
 		};
 		
-		struct ExistentialException : public std::runtime_error
-		{
-			ExistentialException(const std::string& what)
-			: std::runtime_error(what)
-			{ }
-		};
-		
 		Math();
 		
 		Math(const Math& other);
@@ -65,6 +58,8 @@ namespace Markdown
 		v8::Local<v8::Value> _run(const std::string& source,
 								  const v8::Local<v8::Context>& context) const;
 
+		std::string _get_javascript(const std::string& expression) const;
+		
 		std::string _escape(std::string source) const;
 		
 		mutable Allocator _allocator;
