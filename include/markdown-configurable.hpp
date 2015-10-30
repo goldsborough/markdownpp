@@ -13,10 +13,19 @@ namespace Markdown
 		
 		using settings_t = std::unordered_map<std::string, std::string>;
 		
-		struct KeyException : public std::invalid_argument
+		struct ConfigurationKeyException : public std::invalid_argument
 		{
-			KeyException(const std::string& what)
-			: std::invalid_argument(what)
+			ConfigurationKeyException(const std::string& key)
+			: std::invalid_argument("No such key '" + key + "'!")
+			{ }
+		};
+		
+		struct ConfigurationValueException : public std::invalid_argument
+		{
+			ConfigurationValueException(const std::string& key,
+										const std::string& value)
+			: std::invalid_argument("Invalid value '" + value + 
+									"' for key '" + key + "'!")
 			{ }
 		};
 		
@@ -52,14 +61,7 @@ namespace Markdown
 		template<typename R = std::string>
 		R get(const std::string& key) const
 		{
-			auto setting = _settings.find(key);
-			
-			if (setting == _settings.end())
-			{
-				throw KeyException("No such key '" + key + "'!");
-			}
-			
-			std::istringstream stream(setting->second);
+			std::istringstream stream(_get(key));
 			
 			R value;
 			
@@ -74,6 +76,10 @@ namespace Markdown
 		virtual const settings_t& settings() const;
 		
 	protected:
+		
+		std::string& _get(const std::string& key);
+		
+		const std::string& _get(const std::string& key) const;
 		
 		settings_t _settings;
 	};

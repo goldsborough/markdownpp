@@ -79,7 +79,7 @@ namespace Markdown
 		
 		using extraction_t = std::pair<equations_t, equations_t>;
 		
-		inline std::string _get_stylesheet_link(const std::string& path) const;
+		inline std::string _get_stylesheet(const std::string& path) const;
 		
 		extraction_t _extract_math(std::string& markdown) const;
 		
@@ -92,6 +92,8 @@ namespace Markdown
 						  extraction_t& equations) const;
 		
 		void _render_equation(std::string& equation) const;
+		
+		std::string _read_file(const std::string& path) const;
 		
 		
 		std::unique_ptr<AbstractMarkdown> _markdown;

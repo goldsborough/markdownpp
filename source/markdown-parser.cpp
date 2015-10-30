@@ -27,7 +27,8 @@ namespace Markdown
 	const Configurable::settings_t Parser::default_settings = {
 		{"enable-math", "1"},
 		{"markdown-style", "witex"},
-		{"code-style", "none"}
+		{"code-style", "none"},
+		{"css-mode", "embed"}
 	};
 	
 	Parser::Parser(const Configurable::settings_t& settings)
@@ -74,27 +75,23 @@ namespace Markdown
 		
 		html += "<head>\n<meta charset='utf-8'/>\n";
 		
-		html += _get_stylesheet_link("katex/katex.min.css");
+		html += _get_stylesheet("../../katex");
 		
 		auto markdown_style = Configurable::get("markdown-style");
 		
 		if (markdown_style != "none")
 		{
-			html += _get_stylesheet_link("themes/markdown/"
-										 + markdown_style
-										 + "/style.css");
+			html += _get_stylesheet("../../themes/markdown/" + markdown_style);
 		}
 		
 		auto code_style = Configurable::get("code-style");
 
 		if (code_style != "none")
 		{
-			html += _get_stylesheet_link("themes/code/"
-										 + code_style
-										 + "/style.css");
+			html += _get_stylesheet("../../themes/code/" + code_style);
 		}
 		
-		html += "</head>\n<body>\n";
+		html += "</head>\n<body class='markdown-body'>\n";
 		html += snippet(markdown);
 		html += "</body>\n</html>";
 		
@@ -103,18 +100,7 @@ namespace Markdown
 	
 	std::string Parser::render_file(const std::string &path)
 	{
-		std::ifstream file(path);
-		
-		if (! file)
-		{
-			throw FileException("Could not open file '" + path + "'!");
-		}
-		
-		std::string markdown;
-		
-		std::copy(std::istreambuf_iterator<char>{file},
-				  std::istreambuf_iterator<char>{},
-				  std::back_inserter(markdown));
+		auto markdown = _read_file(path);
 		
 		return render(markdown);
 	}
@@ -186,12 +172,33 @@ namespace Markdown
 		return *_math;
 	}
 	
-	inline std::string Parser::_get_stylesheet_link(const std::string &path) const
+	inline std::string Parser::_get_stylesheet(const std::string &path) const
 	{
 		static const std::string link = "<link rel='stylesheet' "
 									    "type='text/css' href='";
 		
-		return link + path + "'>\n";
+		auto css_mode = Configurable::get("css-mode");
+		
+		if (css_mode == "embed")
+		{
+			auto css = _read_file(path + "/style.css");
+			
+			return "<style>\n" + css + "</style>\n";
+		}
+		
+		else if(css_mode == "local")
+		{
+			return link + path + "/style.css'>\n";
+		}
+		
+		else if (css_mode == "network")
+		{
+			auto url = _read_file(path + "/network.url");
+			
+			return link + url + "'>\n";
+		}
+		
+		else throw ConfigurationValueException("css-mode", css_mode);
 	}
 
 	Parser::extraction_t Parser::_extract_math(std::string& markdown) const
@@ -278,5 +285,30 @@ namespace Markdown
 			
 			html = std::regex_replace(html, pattern, equations.first[i]);
 		}
+	}
+	
+	std::string Parser::_read_file(const std::string &path) const
+	{
+		std::ifstream file(path);
+		
+		if (! file)
+		{
+			throw FileException("Could not open file '" + path + "'!");
+		}
+		
+		std::string contents;
+		
+		std::copy(std::istreambuf_iterator<char>{file},
+				  std::istreambuf_iterator<char>{},
+				  std::back_inserter(contents));
+		
+		// Strip trailing whitespace
+		auto end = std::find_if_not(contents.rbegin(),
+									contents.rend(),
+									::isspace);
+		
+		contents.erase(end.base(), contents.end());
+		
+		return contents;
 	}
 }
