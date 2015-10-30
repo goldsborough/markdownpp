@@ -13,7 +13,7 @@ namespace Markdown
 	};
 	
 	Math::Math(const Configurable::settings_t& settings)
-	: Configurable(settings)
+	: AbstractMath(settings)
 	, _isolate(_new_isolate())
 	{		
 		v8::HandleScope handle_scope(_isolate);
@@ -63,7 +63,7 @@ namespace Markdown
 	
 	Math::~Math() = default;
 	
-	std::string Math::render(const std::string &expression) const
+	std::string Math::render(const std::string &expression)
 	{
 		v8::Isolate::Scope isolate_scope(_isolate);
 		

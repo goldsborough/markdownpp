@@ -1,6 +1,10 @@
+#include "markdown-abstract-markdown.hpp"
+#include "markdown-abstract-math.hpp"
 #include "markdown-markdown.hpp"
 #include "markdown-math.hpp"
 #include "markdown-parser.hpp"
+
+#include <fstream>
 
 namespace Markdown
 {
@@ -30,23 +34,18 @@ namespace Markdown
 	, _math(std::make_unique<Math>())
 	{ }
 	
-	Parser::Parser(const Parser& other)
-	: Configurable(other._settings)
-	, _markdown(std::make_unique<Markdown>(*other._markdown))
-	, _math(std::make_unique<Math>(*other._math))
+	Parser::Parser(std::unique_ptr<AbstractMarkdown> markdown_engine,
+				   std::unique_ptr<AbstractMath> math_engine,
+				   const Configurable::settings_t& settings)
+	: Configurable(settings)
+	, _markdown(std::move(markdown_engine))
+	, _math(std::move(math_engine))
 	{ }
 	
 	Parser::Parser(Parser&& other) noexcept
 	: Parser()
 	{
 		swap(other);
-	}
-	
-	Parser& Parser::operator=(Parser other)
-	{
-		swap(other);
-		
-		return *this;
 	}
 	
 	void Parser::swap(Parser &other) noexcept
@@ -76,6 +75,39 @@ namespace Markdown
 		return html;
 	}
 	
+	std::string Parser::render_file(const std::string &path)
+	{
+		std::ifstream file(path);
+		
+		if (! file)
+		{
+			throw FileException("Could not open file '" + path + "'!");
+		}
+		
+		std::string markdown;
+		
+		std::copy(std::istreambuf_iterator<char>{file},
+				  std::istreambuf_iterator<char>{},
+				  std::back_inserter(markdown));
+		
+		return render(markdown);
+	}
+	
+	void Parser::render_file(const std::string &path,
+							   const std::string &destination)
+	{
+		std::ofstream file(destination);
+		
+		if (! file)
+		{
+			throw FileException("Could not open file '" + path + "'");
+		}
+		
+		auto html = render_file(path);
+		
+		file << html;
+	}
+	
 	std::string Parser::snippet(const std::string &markdown) const
 	{
 		// extract math, leave comment-markers
@@ -83,24 +115,24 @@ namespace Markdown
 		return _markdown->render(markdown);
 	}
 	
-	const Markdown& Parser::markdown() const
+	const AbstractMarkdown& Parser::markdown() const
 	{
 		return *_markdown;
 	}
 	
 	
-	const Math& Parser::math() const
+	const AbstractMath& Parser::math() const
 	{
 		return *_math;
 	}
 	
-	Markdown& Parser::markdown()
+	AbstractMarkdown& Parser::markdown()
 	{
 		return *_markdown;
 	}
 	
 	
-	Math& Parser::math()
+	AbstractMath& Parser::math()
 	{
 		return *_math;
 	}

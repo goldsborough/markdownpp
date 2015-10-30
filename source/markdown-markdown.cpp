@@ -1,6 +1,5 @@
 #include "markdown-markdown.hpp"
 
-#include <fstream>
 #include <hoedown/html.h>
 #include <hoedown/document.h>
 
@@ -18,8 +17,8 @@ namespace Markdown
 	};
 	
 	Markdown::Markdown(const Configurable::settings_t& settings)
-	: Configurable(settings)
-	, _renderer(hoedown_html_renderer_new(static_cast<hoedown_html_flags>(0), 0))
+	: AbstractMarkdown(settings)
+	, _renderer(hoedown_html_renderer_new(static_cast<hoedown_html_flags>(0), 16))
 	, _buffer(hoedown_buffer_new(100))
 	{ }
 	
@@ -30,7 +29,9 @@ namespace Markdown
 	}
 	
 	Markdown::Markdown(const Markdown& other)
-	: Configurable(other._settings)
+	: AbstractMarkdown(other._settings)
+	, _renderer(hoedown_html_renderer_new(static_cast<hoedown_html_flags>(0), 16))
+	, _buffer(hoedown_buffer_new(other._buffer->size))
 	{ }
 	
 	Markdown::Markdown(Markdown&& other) noexcept
@@ -110,24 +111,6 @@ namespace Markdown
 		hoedown_buffer_reset(_buffer);
 
 		return result;
-	}
-	
-	std::string Markdown::render_file(const std::string &path)
-	{
-		std::ifstream file(path);
-		
-		if (! file)
-		{
-			throw FileException("Could not open file '" + path + "'!");
-		}
-		
-		std::string markdown;
-		
-		std::copy(std::istreambuf_iterator<char>{file},
-				  std::istreambuf_iterator<char>{},
-				  std::back_inserter(markdown));
-		
-		return render(markdown);
 	}
 	
 	void Markdown::settings(flags_t flags)

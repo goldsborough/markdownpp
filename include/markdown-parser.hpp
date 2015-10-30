@@ -3,13 +3,14 @@
 
 #include "markdown-configurable.hpp"
 
+#include <stdexcept>
 #include <string>
 #include <memory>
 
 namespace Markdown
 {
-	class Markdown;
-	class Math;
+	class AbstractMarkdown;
+	class AbstractMath;
 	class Code;
 	
 	std::string render(const std::string& markdown);
@@ -20,15 +21,26 @@ namespace Markdown
 	{
 	public:
 		
+		struct FileException : public std::runtime_error
+		{
+			FileException(const std::string& what)
+			: std::runtime_error(what)
+			{ }
+		};
+		
 		static const Configurable::settings_t default_settings;
 		
 		Parser(const Configurable::settings_t& settings = default_settings);
 		
-		Parser(const Parser& other);
+		Parser(std::unique_ptr<AbstractMarkdown> markdown_engine,
+			   std::unique_ptr<AbstractMath> math_engine,
+			   const Configurable::settings_t& settings = default_settings);
+		
+		Parser(const Parser& other) = delete;
 		
 		Parser(Parser&& other) noexcept;
 		
-		Parser& operator=(Parser other);
+		Parser& operator=(Parser other) = delete;
 		
 		virtual void swap(Parser& other) noexcept;
 		
@@ -39,22 +51,27 @@ namespace Markdown
 		
 		virtual std::string render(const std::string& markdown) const;
 		
+		virtual std::string render_file(const std::string& path);
+		
+		virtual void render_file(const std::string& path,
+								 const std::string& destination);
+		
 		virtual std::string snippet(const std::string& markdown) const;
 		
 		
-		virtual const Markdown& markdown() const;
+		virtual const AbstractMarkdown& markdown() const;
 		
-		virtual const Math& math() const;
+		virtual const AbstractMath& math() const;
 		
-		virtual Markdown& markdown();
+		virtual AbstractMarkdown& markdown();
 		
-		virtual Math& math();
+		virtual AbstractMath& math();
 		
 	protected:
 		
-		std::unique_ptr<Markdown> _markdown;
+		std::unique_ptr<AbstractMarkdown> _markdown;
 		
-		std::unique_ptr<Math> _math;
+		std::unique_ptr<AbstractMath> _math;
 	};
 }
 

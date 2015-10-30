@@ -1,10 +1,9 @@
 #ifndef MARKDOWNPP_MARKDOWN_HPP
 #define MARKDOWNPP_MARKDOWN_HPP
 
-#include "markdown-configurable.hpp"
+#include "markdown-abstract-markdown.hpp"
 
 #include <cstdint>
-#include <stdexcept>
 #include <string>
 
 struct hoedown_buffer;
@@ -13,16 +12,9 @@ struct hoedown_renderer;
 
 namespace Markdown
 {
-	class Markdown : public Configurable
+	class Markdown : public AbstractMarkdown
 	{
 	public:
-		
-		struct FileException : public std::runtime_error
-		{
-			FileException(const std::string& what)
-			: std::runtime_error(what)
-			{ }
-		};
 		
 		enum Flags
 		{
@@ -35,8 +27,6 @@ namespace Markdown
 			QUOTE         = 0x40,
 			SUPERSCRIPT   = 0x100
 		};
-		
-		using flags_t = unsigned char;
 		
 		static const Configurable::settings_t default_settings;
 		
@@ -57,23 +47,23 @@ namespace Markdown
 		~Markdown();
 		
 		
-		std::string render(const std::string& markdown);
-		
-		std::string render_file(const std::string& path);
+		std::string render(const std::string& markdown) override;
 		
 		
-		void settings(flags_t flags);
+		void settings(AbstractMarkdown::flags_t flags) override;
 		
 	private:
 		
 		auto _load_extensions() const;
 		
-		inline hoedown_buffer* _verify_buffer_size(std::size_t new_size) const;
+		inline hoedown_buffer*
+		_verify_buffer_size(std::size_t new_size) const;
 		
 		inline std::unique_ptr<std::uint8_t[]>
 		_to_uint8_string(const std::string& string) const;
 		
-		inline std::string _buffer_to_string(const hoedown_buffer* buffer) const;
+		inline std::string
+		_buffer_to_string(const hoedown_buffer* buffer) const;
 		
 		
 		hoedown_renderer* _renderer;

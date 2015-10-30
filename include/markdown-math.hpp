@@ -1,7 +1,7 @@
 #ifndef MARKDOWN_MATH_HPP
 #define MARKDOWN_MATH_HPP
 
-#include "markdown-configurable.hpp"
+#include "markdown-abstract-math.hpp"
 
 #include <stdexcept>
 #include <string>
@@ -9,7 +9,7 @@
 
 namespace Markdown
 {
-	class Math : public Configurable
+	class Math : public AbstractMath
 	{
 	public:
 		
@@ -39,7 +39,7 @@ namespace Markdown
 		~Math();
 		
 		
-		std::string render(const std::string& expression) const;
+		virtual std::string render(const std::string& expression) override;
 		
 		
 	private:
