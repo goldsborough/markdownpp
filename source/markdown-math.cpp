@@ -86,7 +86,7 @@ namespace Markdown
 		
 		std::string html = *static_cast<v8::String::Utf8Value>(value);
 		
-		return "<div class='math'>\n" + html + "</div>\n";
+		return "<span class='math'>\n" + html + "</span>\n";
 	}
 	
 	v8::Isolate* Math::_new_isolate() const

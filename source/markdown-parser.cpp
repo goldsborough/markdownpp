@@ -25,8 +25,8 @@ namespace Markdown
 	}
 	
 	const Configurable::settings_t Parser::default_settings = {
-		{"enable-math", "true"},
-		{"style", "none"},
+		{"enable-math", "1"},
+		{"markdown-style", "none"},
 		{"code-style", "none"}
 	};
 	
@@ -70,9 +70,33 @@ namespace Markdown
 	
 	std::string Parser::render(std::string markdown) const
 	{
-		// extract math, leave comment-markers
+		std::string html = "<!DOCTYPE html>\n<html>\n";
 		
-		auto html = snippet(markdown);
+		html += "<head>\n<meta charset='utf-8'/>\n";
+		
+		html += _get_stylesheet_link("katex/katex.min.css");
+		
+		auto markdown_style = Configurable::get("markdown-style");
+		
+		if (markdown_style != "none")
+		{
+			html += _get_stylesheet_link("themes/markdown/"
+										 + markdown_style
+										 + "/style.css");
+		}
+		
+		auto code_style = Configurable::get("code-style");
+
+		if (code_style != "none")
+		{
+			html += _get_stylesheet_link("themes/code/"
+										 + code_style
+										 + "/style.css");
+		}
+		
+		html += "</head>\n<body>\n";
+		html += snippet(markdown);
+		html += "</body>\n</html>";
 		
 		return html;
 	}
@@ -102,7 +126,7 @@ namespace Markdown
 		
 		if (! file)
 		{
-			throw FileException("Could not open file '" + path + "'");
+			throw FileException("Could not open file '" + path + "'!");
 		}
 		
 		auto html = render_file(path);
@@ -112,16 +136,33 @@ namespace Markdown
 	
 	std::string Parser::snippet(std::string markdown) const
 	{
-		auto equations = _extract_math(markdown);
+		if (Configurable::get<bool>("enable-math"))
+		{
+			auto equations = _extract_math(markdown);
+			
+			auto html = _markdown->render(markdown);
+			
+			_convert_math(equations);
+			
+			_insert_math(html, equations);
+			
+			return html;
+		}
 		
-		auto html = _markdown->render(markdown);
-		
-		_convert_math(equations);
-		
-		_insert_math(html, equations);
-		
-		return html;
+		else return _markdown->render(markdown);
 	}
+	
+	void Parser::markdown(std::unique_ptr<AbstractMarkdown> markdown_engine)
+	{
+		_markdown = std::move(markdown_engine);
+	}
+	
+	
+	void Parser::math(std::unique_ptr<AbstractMath> math_engine)
+	{
+		_math = std::move(math_engine);
+	}
+
 	
 	const AbstractMarkdown& Parser::markdown() const
 	{
@@ -145,6 +186,14 @@ namespace Markdown
 		return *_math;
 	}
 	
+	inline std::string Parser::_get_stylesheet_link(const std::string &path) const
+	{
+		static const std::string link = "<link rel='stylesheet' "
+									    "type='text/css' href='";
+		
+		return link + path + "'>\n";
+	}
+
 	Parser::extraction_t Parser::_extract_math(std::string& markdown) const
 	{
 		static const std::string inline_math("(?:^|[^$])\\$([^$]+?)\\$(?!\\$)");

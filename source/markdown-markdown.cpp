@@ -52,7 +52,9 @@ namespace Markdown
 		// Enable ADL
 		using std::swap;
 		
-		//
+		swap(_renderer, other._renderer);
+		
+		swap(_buffer, other._buffer);
 	}
 	
 	void swap(Markdown& first, Markdown& second) noexcept
@@ -148,7 +150,7 @@ namespace Markdown
 	{
 		auto result = std::make_unique<std::uint8_t[]>(string.size());
 		
-		std::memcpy(result.get(), string.c_str(), string.size());
+		std::copy(string.begin(), string.end(), result.get());
 		
 		return result;
 	}
@@ -156,10 +158,12 @@ namespace Markdown
 	inline std::string
 	Markdown::_buffer_to_string(const hoedown_buffer *buffer) const
 	{
-		auto data = std::make_unique<char[]>(buffer->size);
+		std::string string(buffer->size, '\0');
 		
-		std::memcpy(data.get(), buffer->data, buffer->size);
+		std::copy(buffer->data,
+				  buffer->data + buffer->size,
+				  string.begin());
 		
-		return data.get();
+		return string;
 	}
 }

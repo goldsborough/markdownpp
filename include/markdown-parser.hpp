@@ -61,6 +61,10 @@ namespace Markdown
 		virtual std::string snippet(std::string markdown) const;
 		
 		
+		virtual void markdown(std::unique_ptr<AbstractMarkdown> markdown_engine);
+		
+		virtual void math(std::unique_ptr<AbstractMath> math_engine);
+		
 		virtual const AbstractMarkdown& markdown() const;
 		
 		virtual const AbstractMath& math() const;
@@ -74,6 +78,8 @@ namespace Markdown
 		using equations_t = std::vector<std::string>;
 		
 		using extraction_t = std::pair<equations_t, equations_t>;
+		
+		inline std::string _get_stylesheet_link(const std::string& path) const;
 		
 		extraction_t _extract_math(std::string& markdown) const;
 		

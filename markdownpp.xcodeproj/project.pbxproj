@@ -109,8 +109,8 @@
 		7A1FFCBA1BD7C92400FD092F /* source */ = {
 			isa = PBXGroup;
 			children = (
-				7A1FFCC21BD7DA5600FD092F /* markdown-markdown.cpp */,
 				7A1FFCC41BD7DA6000FD092F /* markdown-parser.cpp */,
+				7A1FFCC21BD7DA5600FD092F /* markdown-markdown.cpp */,
 				7A1FFCC71BD7DA7100FD092F /* markdown-math.cpp */,
 				7A7016151BE2E3E300662E38 /* markdown-configurable.cpp */,
 				7A70161A1BE3E3A000662E38 /* markdown-abstract-math.cpp */,
