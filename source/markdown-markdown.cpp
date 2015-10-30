@@ -1,6 +1,6 @@
 #include "markdown-markdown.hpp"
 
-#include <cstdint>
+#include <fstream>
 #include <hoedown/html.h>
 #include <hoedown/document.h>
 
@@ -110,6 +110,24 @@ namespace Markdown
 		hoedown_buffer_reset(_buffer);
 
 		return result;
+	}
+	
+	std::string Markdown::render_file(const std::string &path)
+	{
+		std::ifstream file(path);
+		
+		if (! file)
+		{
+			throw FileException("Could not open file '" + path + "'!");
+		}
+		
+		std::string markdown;
+		
+		std::copy(std::istreambuf_iterator<char>{file},
+				  std::istreambuf_iterator<char>{},
+				  std::back_inserter(markdown));
+		
+		return render(markdown);
 	}
 	
 	void Markdown::settings(flags_t flags)

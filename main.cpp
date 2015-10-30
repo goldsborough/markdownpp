@@ -1,4 +1,6 @@
 #include "markdown-parser.hpp"
+#include "markdown-markdown.hpp"
+#include "markdown-configurable.hpp"
 
 #include "hoedown/html.h"
 #include "hoedown/document.h"
@@ -7,12 +9,15 @@
 
 int main(int argc, const char* argv[])
 {
+
 	Markdown::Parser parser;
 	
-	auto html = parser.render("*hello*");
+	parser.markdown().configure("fenced-code", true);
+	
+	auto html = parser.render("```Python\nprint(1)\n```");
 	
 	std::cout << html << std::endl;
-	
+
 	/*
 	hoedown_renderer* renderer = hoedown_html_renderer_new(static_cast<hoedown_html_flags>(0), 0);
 	
@@ -31,15 +36,6 @@ int main(int argc, const char* argv[])
 							reinterpret_cast<const uint8_t*>(markdown.c_str()),
 							markdown.size());
 
-	markdown = "*hello*";
-	
-	hoedown_buffer_reset(html);
-	
-	hoedown_document_render(document,
-							html,
-							reinterpret_cast<const uint8_t*>(markdown.c_str()),
-							markdown.size());
-	
 	std::cout << html->data << std::endl;
 	
 	hoedown_document_free(document);

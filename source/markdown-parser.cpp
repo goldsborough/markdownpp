@@ -93,4 +93,15 @@ namespace Markdown
 	{
 		return *_math;
 	}
+	
+	Markdown& Parser::markdown()
+	{
+		return *_markdown;
+	}
+	
+	
+	Math& Parser::math()
+	{
+		return *_math;
+	}
 }

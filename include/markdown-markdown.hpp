@@ -4,6 +4,7 @@
 #include "markdown-configurable.hpp"
 
 #include <cstdint>
+#include <stdexcept>
 #include <string>
 
 struct hoedown_buffer;
@@ -16,16 +17,23 @@ namespace Markdown
 	{
 	public:
 		
+		struct FileException : public std::runtime_error
+		{
+			FileException(const std::string& what)
+			: std::runtime_error(what)
+			{ }
+		};
+		
 		enum Flags
 		{
-			TABLES        = 0x0,
-			FENCED_CODE   = 0x1,
-			FOOTNOTES     = 0x2,
-			AUTOLINK      = 0x4,
-			STRIKE 		  = 0x8,
-			UNDERLINE 	  = 0x10,
-			QUOTE         = 0x20,
-			SUPERSCRIPT   = 0x40
+			TABLES        = 0x1,
+			FENCED_CODE   = 0x2,
+			FOOTNOTES     = 0x4,
+			AUTOLINK      = 0x8,
+			STRIKE 		  = 0x10,
+			UNDERLINE 	  = 0x20,
+			QUOTE         = 0x40,
+			SUPERSCRIPT   = 0x100
 		};
 		
 		using flags_t = unsigned char;
@@ -50,6 +58,8 @@ namespace Markdown
 		
 		
 		std::string render(const std::string& markdown);
+		
+		std::string render_file(const std::string& path);
 		
 		
 		void settings(flags_t flags);

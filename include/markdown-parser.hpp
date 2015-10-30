@@ -46,6 +46,10 @@ namespace Markdown
 		
 		virtual const Math& math() const;
 		
+		virtual Markdown& markdown();
+		
+		virtual Math& math();
+		
 	protected:
 		
 		std::unique_ptr<Markdown> _markdown;
