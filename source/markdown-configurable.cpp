@@ -19,6 +19,12 @@ namespace Markdown
 		setting->second = value;
 	}
 	
+	void Configurable::configure(const std::string &key,
+								 const char *value)
+	{
+		configure(key, std::string(value));
+	}
+	
 	std::string& Configurable::operator[](const std::string &key)
 	{
 		auto setting = _settings.find(key);

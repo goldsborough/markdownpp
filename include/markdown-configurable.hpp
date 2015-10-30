@@ -34,6 +34,9 @@ namespace Markdown
 		virtual void configure(const std::string& key,
 							   const std::string& value);
 		
+		virtual void configure(const std::string& key,
+							   const char* value);
+		
 		template<typename T>
 		void configure(const std::string& key, const T& value)
 		{
