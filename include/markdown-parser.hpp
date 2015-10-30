@@ -14,11 +14,15 @@ namespace Markdown
 	
 	std::string render(const std::string& markdown);
 	
-	class Parser : public Configurable<1>
+	std::string snippet(const std::string& markdown);
+	
+	class Parser : public Configurable
 	{
 	public:
 		
-		Parser(const Configurable::flags_t& flags = Configurable::flags_t());
+		static const Configurable::settings_t default_settings;
+		
+		Parser(const Configurable::settings_t& settings = default_settings);
 		
 		Parser(const Parser& other);
 		
@@ -35,20 +39,18 @@ namespace Markdown
 		
 		virtual std::string render(const std::string& markdown) const;
 		
+		virtual std::string snippet(const std::string& markdown) const;
+		
 		
 		virtual const Markdown& markdown() const;
 		
 		virtual const Math& math() const;
-		
-		virtual const Code& code() const;
 		
 	protected:
 		
 		std::unique_ptr<Markdown> _markdown;
 		
 		std::unique_ptr<Math> _math;
-		
-		std::unique_ptr<Code> _code;
 	};
 }
 

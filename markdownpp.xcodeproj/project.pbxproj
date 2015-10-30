@@ -11,13 +11,15 @@
 		7A1FFCC31BD7DA5600FD092F /* markdown-markdown.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A1FFCC21BD7DA5600FD092F /* markdown-markdown.cpp */; };
 		7A1FFCC61BD7DA6000FD092F /* markdown-parser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A1FFCC41BD7DA6000FD092F /* markdown-parser.cpp */; };
 		7A1FFCC81BD7DA7100FD092F /* markdown-math.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A1FFCC71BD7DA7100FD092F /* markdown-math.cpp */; };
-		7A1FFCCA1BD7DA7E00FD092F /* markdown-code.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A1FFCC91BD7DA7E00FD092F /* markdown-code.cpp */; };
 		7A7016071BE2C69200662E38 /* libv8_libplatform.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A7016051BE2C69200662E38 /* libv8_libplatform.a */; };
 		7A7016081BE2C69200662E38 /* libv8.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A7016061BE2C69200662E38 /* libv8.dylib */; };
 		7A70160D1BE2C74800662E38 /* libv8_base.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A7016091BE2C74800662E38 /* libv8_base.a */; };
 		7A70160E1BE2C74800662E38 /* libv8_libbase.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A70160A1BE2C74800662E38 /* libv8_libbase.a */; };
 		7A70160F1BE2C74800662E38 /* libv8_nosnapshot.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A70160B1BE2C74800662E38 /* libv8_nosnapshot.a */; };
 		7A7016101BE2C74800662E38 /* libv8_snapshot.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A70160C1BE2C74800662E38 /* libv8_snapshot.a */; };
+		7A7016121BE2CFB700662E38 /* libhoedown.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A7016111BE2CFB700662E38 /* libhoedown.a */; };
+		7A7016141BE2D20300662E38 /* libhoedown.so.3 in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A7016131BE2D20300662E38 /* libhoedown.so.3 */; };
+		7A7016171BE2E3E300662E38 /* markdown-configurable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A7016151BE2E3E300662E38 /* markdown-configurable.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -38,18 +40,19 @@
 		7A1FFCBC1BD7C94900FD092F /* markdown-markdown.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = "markdown-markdown.hpp"; sourceTree = "<group>"; };
 		7A1FFCBD1BD7CA5400FD092F /* markdown-parser.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = "markdown-parser.hpp"; sourceTree = "<group>"; };
 		7A1FFCBE1BD7D29C00FD092F /* markdown-math.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = "markdown-math.hpp"; sourceTree = "<group>"; };
-		7A1FFCBF1BD7D37200FD092F /* markdown-code.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = "markdown-code.hpp"; sourceTree = "<group>"; };
 		7A1FFCC11BD7D8A600FD092F /* markdown-configurable.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = "markdown-configurable.hpp"; sourceTree = "<group>"; };
 		7A1FFCC21BD7DA5600FD092F /* markdown-markdown.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "markdown-markdown.cpp"; sourceTree = "<group>"; };
 		7A1FFCC41BD7DA6000FD092F /* markdown-parser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "markdown-parser.cpp"; sourceTree = "<group>"; };
 		7A1FFCC71BD7DA7100FD092F /* markdown-math.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "markdown-math.cpp"; sourceTree = "<group>"; };
-		7A1FFCC91BD7DA7E00FD092F /* markdown-code.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "markdown-code.cpp"; sourceTree = "<group>"; };
 		7A7016051BE2C69200662E38 /* libv8_libplatform.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libv8_libplatform.a; path = ../../../../../usr/local/Cellar/v8/4.5.103.35/lib/libv8_libplatform.a; sourceTree = "<group>"; };
 		7A7016061BE2C69200662E38 /* libv8.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libv8.dylib; path = ../../../../../usr/local/Cellar/v8/4.5.103.35/lib/libv8.dylib; sourceTree = "<group>"; };
 		7A7016091BE2C74800662E38 /* libv8_base.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libv8_base.a; path = ../../../../../usr/local/Cellar/v8/4.5.103.35/lib/libv8_base.a; sourceTree = "<group>"; };
 		7A70160A1BE2C74800662E38 /* libv8_libbase.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libv8_libbase.a; path = ../../../../../usr/local/Cellar/v8/4.5.103.35/lib/libv8_libbase.a; sourceTree = "<group>"; };
 		7A70160B1BE2C74800662E38 /* libv8_nosnapshot.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libv8_nosnapshot.a; path = ../../../../../usr/local/Cellar/v8/4.5.103.35/lib/libv8_nosnapshot.a; sourceTree = "<group>"; };
 		7A70160C1BE2C74800662E38 /* libv8_snapshot.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libv8_snapshot.a; path = ../../../../../usr/local/Cellar/v8/4.5.103.35/lib/libv8_snapshot.a; sourceTree = "<group>"; };
+		7A7016111BE2CFB700662E38 /* libhoedown.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libhoedown.a; path = ../../../../../usr/local/lib/libhoedown.a; sourceTree = "<group>"; };
+		7A7016131BE2D20300662E38 /* libhoedown.so.3 */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libhoedown.so.3; path = ../../../../../usr/local/lib/libhoedown.so.3; sourceTree = "<group>"; };
+		7A7016151BE2E3E300662E38 /* markdown-configurable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "markdown-configurable.cpp"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +60,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7A7016141BE2D20300662E38 /* libhoedown.so.3 in Frameworks */,
+				7A7016121BE2CFB700662E38 /* libhoedown.a in Frameworks */,
 				7A70160D1BE2C74800662E38 /* libv8_base.a in Frameworks */,
 				7A70160E1BE2C74800662E38 /* libv8_libbase.a in Frameworks */,
 				7A70160F1BE2C74800662E38 /* libv8_nosnapshot.a in Frameworks */,
@@ -72,6 +77,8 @@
 		7A1FFCA51BD7C8B000FD092F = {
 			isa = PBXGroup;
 			children = (
+				7A7016131BE2D20300662E38 /* libhoedown.so.3 */,
+				7A7016111BE2CFB700662E38 /* libhoedown.a */,
 				7A7016091BE2C74800662E38 /* libv8_base.a */,
 				7A70160A1BE2C74800662E38 /* libv8_libbase.a */,
 				7A70160B1BE2C74800662E38 /* libv8_nosnapshot.a */,
@@ -99,7 +106,7 @@
 				7A1FFCC21BD7DA5600FD092F /* markdown-markdown.cpp */,
 				7A1FFCC41BD7DA6000FD092F /* markdown-parser.cpp */,
 				7A1FFCC71BD7DA7100FD092F /* markdown-math.cpp */,
-				7A1FFCC91BD7DA7E00FD092F /* markdown-code.cpp */,
+				7A7016151BE2E3E300662E38 /* markdown-configurable.cpp */,
 			);
 			path = source;
 			sourceTree = "<group>";
@@ -110,7 +117,6 @@
 				7A1FFCBC1BD7C94900FD092F /* markdown-markdown.hpp */,
 				7A1FFCBD1BD7CA5400FD092F /* markdown-parser.hpp */,
 				7A1FFCBE1BD7D29C00FD092F /* markdown-math.hpp */,
-				7A1FFCBF1BD7D37200FD092F /* markdown-code.hpp */,
 				7A1FFCC11BD7D8A600FD092F /* markdown-configurable.hpp */,
 			);
 			path = include;
@@ -174,8 +180,8 @@
 			files = (
 				7A1FFCC81BD7DA7100FD092F /* markdown-math.cpp in Sources */,
 				7A1FFCC61BD7DA6000FD092F /* markdown-parser.cpp in Sources */,
+				7A7016171BE2E3E300662E38 /* markdown-configurable.cpp in Sources */,
 				7A1FFCB91BD7C8E000FD092F /* main.cpp in Sources */,
-				7A1FFCCA1BD7DA7E00FD092F /* markdown-code.cpp in Sources */,
 				7A1FFCC31BD7DA5600FD092F /* markdown-markdown.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -264,10 +270,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				HEADER_SEARCH_PATHS = "/usr/local/Cellar/v8/4.5.103.35/**";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
+				HEADER_SEARCH_PATHS = (
+					"/usr/local/Cellar/v8/4.5.103.35/**",
+					/usr/local/include/,
+				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					/usr/local/Cellar/v8/4.5.103.35/lib,
+					/usr/local/lib,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -277,10 +288,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				HEADER_SEARCH_PATHS = "/usr/local/Cellar/v8/4.5.103.35/**";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
+				HEADER_SEARCH_PATHS = (
+					"/usr/local/Cellar/v8/4.5.103.35/**",
+					/usr/local/include/,
+				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					/usr/local/Cellar/v8/4.5.103.35/lib,
+					/usr/local/lib,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

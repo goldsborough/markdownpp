@@ -9,11 +9,9 @@
 
 namespace Markdown
 {
-	class Math : public Configurable<1>
+	class Math : public Configurable
 	{
 	public:
-		
-		using size_t = unsigned short;
 		
 		enum Flags { DisplayMode };
 		
@@ -24,7 +22,9 @@ namespace Markdown
 			{ }
 		};
 		
-		Math();
+		static const Configurable::settings_t default_settings;
+		
+		Math(const Configurable::settings_t& settings = default_settings);
 		
 		Math(const Math& other);
 		
@@ -46,12 +46,22 @@ namespace Markdown
 		
 		struct Allocator : public v8::ArrayBuffer::Allocator
 		{
-			virtual void* Allocate(std::size_t length) override;
+			virtual void* Allocate(size_t length) override;
 			
-			virtual void* AllocateUninitialized(std::size_t length) override;
+			virtual void* AllocateUninitialized(size_t length) override;
 			
-			virtual void Free(void* data, std::size_t) override;
+			virtual void Free(void* data, size_t) override;
 		};
+		
+		static struct V8
+		{
+			V8();
+			
+			~V8();
+			
+			std::unique_ptr<v8::Platform> platform;
+			
+		} _v8;
 
 		v8::Isolate* _new_isolate() const;
 		
@@ -61,6 +71,7 @@ namespace Markdown
 		std::string _get_javascript(const std::string& expression) const;
 		
 		std::string _escape(std::string source) const;
+		
 		
 		mutable Allocator _allocator;
 		

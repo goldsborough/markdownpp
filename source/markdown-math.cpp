@@ -1,11 +1,20 @@
 #include "markdown-math.hpp"
 
+#include <libplatform/libplatform.h>
 #include <cstdlib>
 
 namespace Markdown
 {
-	Math::Math()
-	: _isolate(_new_isolate())
+	Math::V8 Math::_v8;
+	
+	const Configurable::settings_t Math::default_settings = {
+		{"size", "20px"},
+		{"color", "black"}
+	};
+	
+	Math::Math(const Configurable::settings_t& settings)
+	: Configurable(settings)
+	, _isolate(_new_isolate())
 	{		
 		v8::HandleScope handle_scope(_isolate);
 		
@@ -125,14 +134,11 @@ namespace Markdown
 	{
 		std::string source = "katex.renderToString('";
 		
-		source += _escape(expression);
+		source += _escape(expression) + "', ";
 		
-		if (_flags.test(DisplayMode))
-		{
-			source += "', {'displayMode': true}";
-		}
+		source += "{'displayMode': " + _settings.at("display-mode");
 		
-		return source +");";
+		return source + "});";
 	}
 	
 	std::string Math::_escape(std::string source) const
@@ -165,5 +171,22 @@ namespace Markdown
 	void* Math::Allocator::AllocateUninitialized(std::size_t length)
 	{
 		return malloc(length);
+	}
+	
+	Math::V8::V8()
+	: platform(v8::platform::CreateDefaultPlatform())
+	{
+		v8::V8::InitializeICU();
+		
+		v8::V8::InitializePlatform(platform.get());
+		
+		v8::V8::Initialize();
+	}
+	
+	Math::V8::~V8()
+	{
+		v8::V8::Dispose();
+		
+		v8::V8::ShutdownPlatform();
 	}
 }
