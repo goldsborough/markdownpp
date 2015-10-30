@@ -5,6 +5,8 @@
 #include "markdown-parser.hpp"
 
 #include <fstream>
+#include <regex>
+#include <thread>
 
 namespace Markdown
 {
@@ -66,7 +68,7 @@ namespace Markdown
 	Parser::~Parser() = default;
 	
 	
-	std::string Parser::render(const std::string &markdown) const
+	std::string Parser::render(std::string markdown) const
 	{
 		// extract math, leave comment-markers
 		
@@ -108,11 +110,17 @@ namespace Markdown
 		file << html;
 	}
 	
-	std::string Parser::snippet(const std::string &markdown) const
+	std::string Parser::snippet(std::string markdown) const
 	{
-		// extract math, leave comment-markers
+		auto equations = _extract_math(markdown);
 		
-		return _markdown->render(markdown);
+		auto html = _markdown->render(markdown);
+		
+		_convert_math(equations);
+		
+		_insert_math(html, equations);
+		
+		return html;
 	}
 	
 	const AbstractMarkdown& Parser::markdown() const
@@ -135,5 +143,91 @@ namespace Markdown
 	AbstractMath& Parser::math()
 	{
 		return *_math;
+	}
+	
+	Parser::extraction_t Parser::_extract_math(std::string& markdown) const
+	{
+		static const std::string inline_math("(?:^|[^$])\\$([^$]+?)\\$(?!\\$)");
+		
+		static const std::string display_math("\\${2}([^$]+?)\\${2}");
+		
+		auto inline_matches = _extract(markdown, inline_math);
+		
+		auto display_matches = _extract(markdown, display_math);
+		
+		return {inline_matches, display_matches};
+	}
+	
+	Parser::equations_t
+	Parser::_extract(std::string &markdown,
+					 const std::string& pattern) const
+	{
+		equations_t equations;
+		
+		std::regex regex_pattern(pattern,
+								 std::regex_constants::ECMAScript |
+								 std::regex_constants::optimize);
+		
+		std::smatch match;
+		
+		auto begin = markdown.cbegin();
+		
+		for (std::size_t count = 0;
+			 std::regex_search(begin, markdown.cend(), match, regex_pattern);
+			 ++count)
+		{
+			// Get the actual LaTeX equation
+			equations.push_back(match.str(1));
+			
+			// Offset because match.position is relative to begin
+			auto offset = std::distance(markdown.cbegin(), begin);
+			
+			auto marker = std::to_string(count);
+			
+			markdown.replace(offset + match.position(1),
+							 match.length(1),
+							 marker);
+			
+			// Skip the marker and the trailing $
+			std::advance(begin, match.position(1) + marker.size() + 2);
+		}
+		
+		return equations;
+	}
+	
+	void Parser::_convert_math(extraction_t &equations) const
+	{
+		for (auto& equation : equations.first)
+		{
+			equation = _math->render(equation, false);
+		}
+		
+		for (auto& equation : equations.second)
+		{
+			equation = _math->render(equation, true);
+		}
+	}
+	
+	void Parser::_insert_math(std::string &html, extraction_t &equations) const
+	{
+		// Display-math first (have to rely on first getting rid of
+		// the double $, because if you use a lookbehind to see if
+		// there is another $ for the inline statements, that would
+		// also eat up the character matching (?:^|[^$]), which we
+		// don't want)
+		for (std::size_t i = 0; i < equations.second.size(); ++i)
+		{
+			std::regex pattern("\\${2}" + std::to_string(i) + "\\${2}");
+			
+			html = std::regex_replace(html, pattern, equations.second[i]);
+		}
+		
+		// Inline-math
+		for (std::size_t i = 0; i < equations.first.size(); ++i)
+		{
+			std::regex pattern("\\$" + std::to_string(i) + "\\$");
+			
+			html = std::regex_replace(html, pattern, equations.first[i]);
+		}
 	}
 }

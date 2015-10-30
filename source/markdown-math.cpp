@@ -1,15 +1,15 @@
 #include "markdown-math.hpp"
 
-#include <libplatform/libplatform.h>
 #include <cstdlib>
+#include <fstream>
+#include <libplatform/libplatform.h>
 
 namespace Markdown
 {
 	Math::V8 Math::_v8;
 	
 	const Configurable::settings_t Math::default_settings = {
-		{"size", "20px"},
-		{"color", "black"}
+		{"all-display-math", "0"}
 	};
 	
 	Math::Math(const Configurable::settings_t& settings)
@@ -25,6 +25,8 @@ namespace Markdown
 		v8::Context::Scope context_scope(context);
 		
 		_persistent_context = v8::UniquePersistent<v8::Context>(_isolate, context);
+		
+		_load_katex(context);
 	}
 	
 	Math::Math(const Math& other)
@@ -63,7 +65,8 @@ namespace Markdown
 	
 	Math::~Math() = default;
 	
-	std::string Math::render(const std::string &expression)
+	std::string Math::render(const std::string &expression,
+							 bool display_math)
 	{
 		v8::Isolate::Scope isolate_scope(_isolate);
 		
@@ -77,7 +80,7 @@ namespace Markdown
 		
 		v8::Context::Scope context_scope(context);
 		
-		auto source = _get_javascript(expression);
+		auto source = _get_javascript(expression, display_math);
 		
 		auto value = _run(source, context);
 		
@@ -130,13 +133,21 @@ namespace Markdown
 		return handle_scope.Escape(result.ToLocalChecked());
 	}
 	
-	std::string Math::_get_javascript(const std::string &expression) const
+	std::string Math::_get_javascript(const std::string &expression,
+									  bool display_math) const
 	{
 		std::string source = "katex.renderToString('";
 		
-		source += _escape(expression) + "', ";
+		source += _escape(expression) + "', {'displayMode': ";
 		
-		source += "{'displayMode': " + _settings.at("display-mode");
+		// all-display-math | display_math | result
+		// 		 0		    |	  0		   |   0
+		// 		 0		    |	  1		   |   1
+		// 		 1		    |	  0		   |   1
+		// 		 1		    |	  1		   |   1
+		display_math |= Configurable::get<bool>("all-display-math");
+		
+		source += display_math ? "true" : "false";
 		
 		return source + "});";
 	}
@@ -154,6 +165,21 @@ namespace Markdown
 		}
 		
 		return source;
+	}
+	
+	void Math::_load_katex(const v8::Local<v8::Context>& context) const
+	{
+		std::ifstream file("../../katex/katex.min.js");
+		
+		std::string source;
+		std::string input;
+		
+		while (std::getline(file, input))
+		{
+			source += input + " ";
+		}
+		
+		_run(source, context);
 	}
 	
 	void* Math::Allocator::Allocate(std::size_t length)

@@ -3,9 +3,11 @@
 
 #include "markdown-configurable.hpp"
 
+#include <memory>
 #include <stdexcept>
 #include <string>
-#include <memory>
+#include <vector>
+
 
 namespace Markdown
 {
@@ -49,14 +51,14 @@ namespace Markdown
 		virtual ~Parser();
 		
 		
-		virtual std::string render(const std::string& markdown) const;
+		virtual std::string render(std::string markdown) const;
 		
 		virtual std::string render_file(const std::string& path);
 		
 		virtual void render_file(const std::string& path,
 								 const std::string& destination);
 		
-		virtual std::string snippet(const std::string& markdown) const;
+		virtual std::string snippet(std::string markdown) const;
 		
 		
 		virtual const AbstractMarkdown& markdown() const;
@@ -68,6 +70,23 @@ namespace Markdown
 		virtual AbstractMath& math();
 		
 	protected:
+		
+		using equations_t = std::vector<std::string>;
+		
+		using extraction_t = std::pair<equations_t, equations_t>;
+		
+		extraction_t _extract_math(std::string& markdown) const;
+		
+		equations_t _extract(std::string& markdown,
+							 const std::string& pattern) const;
+		
+		void _convert_math(extraction_t& equations) const;
+		
+		void _insert_math(std::string& html,
+						  extraction_t& equations) const;
+		
+		void _render_equation(std::string& equation) const;
+		
 		
 		std::unique_ptr<AbstractMarkdown> _markdown;
 		

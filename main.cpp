@@ -12,7 +12,7 @@ int main(int argc, const char* argv[])
 
 	Markdown::Parser parser;
 	
-	auto html = parser.render_file("../../test.md");
+	auto html = parser.render_file("../../test3.md");
 	
 	std::cout << html << std::endl;
 

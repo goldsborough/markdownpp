@@ -13,7 +13,8 @@ namespace Markdown
 		
 		virtual ~AbstractMath() = default;
 		
-		virtual std::string render(const std::string&) = 0;
+		virtual std::string render(const std::string& equation,
+								   bool display_math) = 0;
 	};
 }
 

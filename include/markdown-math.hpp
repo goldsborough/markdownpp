@@ -39,7 +39,8 @@ namespace Markdown
 		~Math();
 		
 		
-		virtual std::string render(const std::string& expression) override;
+		virtual std::string render(const std::string& expression,
+								   bool display_math = false) override;
 		
 		
 	private:
@@ -68,9 +69,12 @@ namespace Markdown
 		v8::Local<v8::Value> _run(const std::string& source,
 								  const v8::Local<v8::Context>& context) const;
 
-		std::string _get_javascript(const std::string& expression) const;
+		std::string _get_javascript(const std::string& expression,
+									bool display_math) const;
 		
 		std::string _escape(std::string source) const;
+		
+		void _load_katex(const v8::Local<v8::Context>& context) const;
 		
 		
 		mutable Allocator _allocator;
