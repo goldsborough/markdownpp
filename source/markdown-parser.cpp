@@ -26,7 +26,7 @@ namespace Markdown
 	
 	const Configurable::settings_t Parser::default_settings = {
 		{"enable-math", "1"},
-		{"markdown-style", "none"},
+		{"markdown-style", "witex"},
 		{"code-style", "none"}
 	};
 	
@@ -122,7 +122,7 @@ namespace Markdown
 	void Parser::render_file(const std::string &path,
 							   const std::string &destination)
 	{
-		std::ofstream file(destination);
+		std::ofstream file(destination, std::ios::trunc);
 		
 		if (! file)
 		{
