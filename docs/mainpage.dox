@@ -1,0 +1,53 @@
+@mainpage markdownpp
+
+# Markdownpp
+
+[![GitHub license](https://img.shields.io/github/license/mashape/apistatus.svg?style=flat-square)](http://goldsborough.mit-license.org)
+
+Markdownpp is a first-of-its-kind Markdown solution for C++. It unifies and handles all aspects of a modern, powerful and flexible Markdown tool including:
+
+* Markdown conversion with a nice object-oriented interface.
+* `LaTeX` integration for mathematical formulas.
+* Syntax highlighting with [highlight.js](https://highlightjs.org).
+* Multiple Markdown themes, such as GitHub's or Solarized.
+
+## Usage
+
+\code{cpp}
+#include "markdown-parser.hpp"
+
+int main(int argc, const char* argv[])
+{
+	// Main interface
+	Markdown::Parser parser;
+
+	// Flexible key-value configuration
+	parser.configure("markdown-style", "solarized");
+
+	// Quick and easy snippet-conversion, returns HTML as std::string
+	// <p><em>hello</em></p>
+	auto snippet = parser.snippet("*hello*");
+
+	// 65 possible styles (using highlight.js)
+	parser.configure("code-style", "monokai");
+
+	// Full file rendering
+	parser.render_file("input.md", "output.html");
+}
+\endcode
+
+## Demo
+
+See this README rendered by `markdownpp` [here](http://goldsborough.github.io/markdownpp/).
+
+## LICENSE
+
+This project is released under the [MIT License](http://goldsborough.mit-license.org). For more information, see the `LICENSE` file.
+
+## Authors
+
+[Peter Goldsborough](http://goldsborough.me) + [cat](https://goo.gl/IpUmJn) :heart:
+
+<a href="https://gratipay.com/~goldsborough/"><img src="http://img.shields.io/gratipay/goldsborough.png?style=flat-square"></a>
+
+Visit the repository on [GitHub](https://github.com/goldsborough/markdownpp) for more information and the full source.
