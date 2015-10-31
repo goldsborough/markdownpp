@@ -24,6 +24,7 @@
 		7A70161F1BE3E6C800662E38 /* markdown-abstract-markdown.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A70161E1BE3E6C800662E38 /* markdown-abstract-markdown.cpp */; };
 		7A7016211BE5172600662E38 /* libboost_filesystem.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A7016201BE5172600662E38 /* libboost_filesystem.dylib */; };
 		7A7016231BE5188A00662E38 /* libboost_system.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A7016221BE5188A00662E38 /* libboost_system.dylib */; };
+		7A7016251BE57F3C00662E38 /* libboost_program_options.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A7016241BE57F3C00662E38 /* libboost_program_options.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -63,6 +64,7 @@
 		7A70161E1BE3E6C800662E38 /* markdown-abstract-markdown.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "markdown-abstract-markdown.cpp"; sourceTree = "<group>"; };
 		7A7016201BE5172600662E38 /* libboost_filesystem.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libboost_filesystem.dylib; path = ../../../../../usr/local/Cellar/boost/1.58.0/lib/libboost_filesystem.dylib; sourceTree = "<group>"; };
 		7A7016221BE5188A00662E38 /* libboost_system.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libboost_system.dylib; path = ../../../../../usr/local/Cellar/boost/1.58.0/lib/libboost_system.dylib; sourceTree = "<group>"; };
+		7A7016241BE57F3C00662E38 /* libboost_program_options.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libboost_program_options.dylib; path = ../../../../../usr/local/Cellar/boost/1.58.0/lib/libboost_program_options.dylib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,6 +72,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7A7016251BE57F3C00662E38 /* libboost_program_options.dylib in Frameworks */,
 				7A7016231BE5188A00662E38 /* libboost_system.dylib in Frameworks */,
 				7A7016211BE5172600662E38 /* libboost_filesystem.dylib in Frameworks */,
 				7A7016141BE2D20300662E38 /* libhoedown.so.3 in Frameworks */,
@@ -89,6 +92,7 @@
 		7A1FFCA51BD7C8B000FD092F = {
 			isa = PBXGroup;
 			children = (
+				7A7016241BE57F3C00662E38 /* libboost_program_options.dylib */,
 				7A7016221BE5188A00662E38 /* libboost_system.dylib */,
 				7A7016201BE5172600662E38 /* libboost_filesystem.dylib */,
 				7A7016131BE2D20300662E38 /* libhoedown.so.3 */,
