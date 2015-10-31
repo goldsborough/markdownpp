@@ -189,7 +189,7 @@ namespace Markdown
 		return _custom_css;
 	}
 	
-	void Parser::remove_custom_css()
+	void Parser::clear_custom_css()
 	{
 		_custom_css.clear();
 	}
