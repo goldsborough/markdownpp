@@ -56,7 +56,13 @@ namespace Markdown
 		
 		Configurable(const settings_t& settings);
 		
-		/*! Hack for making Configurable an abstract class. */
+		/*******************************************************************//*!
+		*
+		*	@brief Destructs members of a configurable object.
+		*
+		*	@details Also a hack for making Configurable an abstract class.
+		*
+		***********************************************************************/
 		virtual ~Configurable() = 0;
 		
 		/*******************************************************************//*!

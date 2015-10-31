@@ -36,6 +36,12 @@ namespace Markdown
 		
 		AbstractMath(const Configurable::settings_t& settings);
 		
+		/*******************************************************************//*!
+		*
+		*	@brief Destructs members of an abstract math engine.
+		*
+		***********************************************************************/
+		
 		virtual ~AbstractMath() = default;
 		
 		/*******************************************************************//*!

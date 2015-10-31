@@ -39,6 +39,12 @@ namespace Markdown
 		
 		AbstractMarkdown(const Configurable::settings_t& settings);
 		
+		/*******************************************************************//*!
+		*
+		*	@brief Destructs members of an abstract markdown engine.
+		*
+		***********************************************************************/
+		
 		virtual ~AbstractMarkdown() = default;
 		
 		/*******************************************************************//*!
