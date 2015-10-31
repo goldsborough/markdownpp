@@ -46,8 +46,8 @@ namespace Markdown
 	};
 	
 	Parser::Parser(const std::string& root,
-				   const Configurable::settings_t& settings,
-				   const std::string& stylesheet_path)
+				   const std::string& stylesheet_path,
+				   const Configurable::settings_t& settings)
 	: Configurable(settings)
 	, _markdown(std::make_unique<Markdown>())
 	, _math(std::make_unique<Math>())
@@ -58,8 +58,8 @@ namespace Markdown
 	Parser::Parser(std::unique_ptr<AbstractMarkdown> markdown_engine,
 				   std::unique_ptr<AbstractMath> math_engine,
 				   const std::string& root,
-				   const Configurable::settings_t& settings,
-				   const std::string& stylesheet_path)
+				   const std::string& stylesheet_path,
+				   const Configurable::settings_t& settings)
 	: Configurable(settings)
 	, _markdown(std::move(markdown_engine))
 	, _math(std::move(math_engine))
@@ -124,7 +124,7 @@ namespace Markdown
 	
 	std::string Parser::render_file(const std::string &path)
 	{
-		auto markdown = _read_file(path);
+		auto markdown = _read_file(_join_paths({path}));
 		
 		return render(markdown);
 	}
@@ -132,7 +132,7 @@ namespace Markdown
 	void Parser::render_file(const std::string &path,
 							   const std::string &destination)
 	{
-		std::ofstream file(destination, std::ios::trunc);
+		std::ofstream file(_join_paths({destination}), std::ios::trunc);
 		
 		if (! file)
 		{

@@ -30,14 +30,14 @@ namespace Markdown
 		static const Configurable::settings_t default_settings;
 		
 		Parser(const std::string& root = ".",
-			   const Configurable::settings_t& settings = default_settings,
-			   const std::string& stylesheet_path = std::string());
+			   const std::string& stylesheet_path = std::string(),
+			   const Configurable::settings_t& settings = default_settings);
 		
 		Parser(std::unique_ptr<AbstractMarkdown> markdown_engine,
 			   std::unique_ptr<AbstractMath> math_engine,
 			   const std::string& root = ".",
-			   const Configurable::settings_t& settings = default_settings,
-			   const std::string& stylesheet_path = std::string());
+			   const std::string& stylesheet_path = std::string(),
+			   const Configurable::settings_t& settings = default_settings);
 		
 		Parser(const Parser& other) = delete;
 		

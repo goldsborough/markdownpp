@@ -4,16 +4,7 @@
 
 int main(int argc, const char* argv[])
 {
-	Markdown::Parser parser("/Users/petergoldsborough/Documents/Projects/markdownpp");
+	Markdown::Parser parser("../../", "README.css");
 	
-	parser.configure("code-style", "railscasts");
-	
-	parser.configure("enable-code", true);
-	
-	parser.configure("include-mode", "local");
-	
-	parser.stylesheet("test/additional.css");
-	
-	parser.render_file("../../test/math.md",
-					   "../../output.html");
+	parser.render_file("README.md", "docs/README.html");
 }

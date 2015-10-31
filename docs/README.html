@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset='utf-8'/>
+<link type='text/css' rel='stylesheet' href='http://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.3.0/katex.min.css'>
+<link type='text/css' rel='stylesheet' href='https://raw.githack.com/goldsborough/markdownpp/master/themes/markdown/github/style.css?token=AGIcmz9uqd-4bVjM0_DsjDWhFaiOdQ78ks5WPiHiwA%3D%3D'>
+<link type='text/css' rel='stylesheet' href='http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/styles/solarized_dark.min.css'>
+<script type='text/javascript' src='http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/highlight.min.js'></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<link type='text/css' rel='stylesheet' href='README.css'>
+</head>
+<body>
+<h1 id="toc_0">Markdownpp</h1>
+
+<p><a href="http://goldsborough.mit-license.org"><img src="https://img.shields.io/github/license/mashape/apistatus.svg?style=flat-square" alt="GitHub license"></a></p>
+
+<p>Markdownpp is a first-of-its-kind Markdown solution for C++. It unifies and handles all aspects of a modern, powerful and flexible Markdown tool including:</p>
+
+<ul>
+<li>Markdown conversion with a nice object-oriented interface.</li>
+<li><code>LaTeX</code> integration for mathematical formulas.</li>
+<li>Syntax highlighting with <a href="https://highlightjs.org">highlight.js</a>.</li>
+<li>Multiple Markdown themes, such as GitHub&#39;s or Solarized.</li>
+</ul>
+
+<h2 id="toc_1">Usage</h2>
+
+<pre><code class="language-C++">#include &quot;markdown-parser.hpp&quot;
+
+int main(int argc, const char* argv[])
+{
+    // Main interface
+    Markdown::Parser parser;
+
+    // Flexible key-value configuration
+    parser.configure(&quot;markdown-style&quot;, &quot;solarized&quot;);
+
+    // Quick and easy snippet-conversion, returns HTML as std::string
+    // &lt;p&gt;&lt;em&gt;hello&lt;/em&gt;&lt;/p&gt;
+    auto snippet = parser.snippet(&quot;*hello*&quot;);
+
+    // 65 possible styles (using highlight.js)
+    parser.configure(&quot;code-style&quot;, &quot;monokai&quot;);
+
+    // Full file rendering
+    parser.render_file(&quot;input.md&quot;, &quot;output.html&quot;);
+}
+</code></pre>
+
+<h2 id="toc_2">Example</h2>
+
+<p>See this README rendered by <code>markdownpp</code> <a href="https://raw.githubusercontent.com/goldsborough/markdownpp/master/docs/README.html?token=AGIcm6im9NVHtx5ilWtAOMHq4EydlZTTks5WPkHDwA%3D%3D">here</a>.</p>
+
+<h2 id="toc_3">Documentation</h2>
+
+<p>You can build extensive documentation with <code>doxygen</code>. See the <code>doxyfile</code> in the <code>docs/</code> folder. There are also some example programs in the <code>examples</code> folder.</p>
+
+<h2 id="toc_4">LICENSE</h2>
+
+<p>This project is released under the <a href="http://goldsborough.mit-license.org">MIT License</a>. For more information, see the LICENSE file.</p>
+
+<h2 id="toc_5">Authors</h2>
+
+<p><a href="http://goldsborough.me">Peter Goldsborough</a> + <a href="https://goo.gl/IpUmJn">cat</a> :heart:</p>
+
+<p><a href="https://gratipay.com/~goldsborough/"><img src="http://img.shields.io/gratipay/goldsborough.png?style=flat-square"></a></p>
+</body>
+</html>
