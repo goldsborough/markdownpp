@@ -6,20 +6,19 @@
 
 #include <fstream>
 #include <regex>
-#include <thread>
 
 namespace Markdown
 {
 	std::string render(const std::string& markdown)
 	{
-		const Parser parser;
+		Parser parser;
 		
 		return parser.render(markdown);
 	}
 	
 	std::string snippet(const std::string& markdown)
 	{
-		const Parser parser;
+		Parser parser;
 		
 		return parser.snippet(markdown);
 	}
@@ -32,18 +31,32 @@ namespace Markdown
 		{"include-mode", "network"}
 	};
 	
-	Parser::Parser(const Configurable::settings_t& settings)
+	const Parser::tag_t Parser::_link = {
+		"<link type='text/css' rel='stylesheet' href='",
+		"'>\n"
+	};
+	
+	const Parser::tag_t Parser::_script = {
+		"<script type='text/javascript' src='",
+		"'></script>\n"
+	};
+	
+	Parser::Parser(const Configurable::settings_t& settings,
+				   const std::string& stylesheet_path)
 	: Configurable(settings)
 	, _markdown(std::make_unique<Markdown>())
 	, _math(std::make_unique<Math>())
+	, _stylesheet_path(stylesheet_path)
 	{ }
 	
 	Parser::Parser(std::unique_ptr<AbstractMarkdown> markdown_engine,
 				   std::unique_ptr<AbstractMath> math_engine,
-				   const Configurable::settings_t& settings)
+				   const Configurable::settings_t& settings,
+				   const std::string& stylesheet_path)
 	: Configurable(settings)
 	, _markdown(std::move(markdown_engine))
 	, _math(std::move(math_engine))
+	, _stylesheet_path(stylesheet_path)
 	{ }
 	
 	Parser::Parser(Parser&& other) noexcept
@@ -70,7 +83,7 @@ namespace Markdown
 	Parser::~Parser() = default;
 	
 	
-	std::string Parser::render(std::string markdown) const
+	std::string Parser::render(std::string markdown)
 	{
 		std::string html = "<!DOCTYPE html>\n<html>\n<head>\n"
 						   "<meta charset='utf-8'/>\n";
@@ -87,6 +100,11 @@ namespace Markdown
 		if (Configurable::get<bool>("enable-highlighting"))
 		{
 			html += _enable_highlighting();
+		}
+		
+		if (! _stylesheet_path.empty() || ! _custom_css.empty())
+		{
+			html += _add_custom_css();
 		}
 		
 		html += "</head>\n<body>\n";
@@ -136,6 +154,44 @@ namespace Markdown
 		else return _markdown->render(markdown);
 	}
 	
+	void Parser::stylesheet(const std::string& path)
+	{
+		if (Configurable::get("include-mode") == "embed")
+		{
+			_stylesheet = _read_file(path);
+		}
+		
+		_stylesheet_path = path;
+	}
+	
+	const std::string& Parser::stylesheet() const
+	{
+		return _stylesheet_path;
+	}
+	
+	void Parser::remove_stylesheet()
+	{
+		_stylesheet.clear();
+		
+		_stylesheet_path.clear();
+	}
+	
+	
+	void Parser::add_css(const std::string& css)
+	{
+		_custom_css += css;
+	}
+	
+	const std::string& Parser::custom_css() const
+	{
+		return _custom_css;
+	}
+	
+	void Parser::remove_custom_css()
+	{
+		_custom_css.clear();
+	}
+	
 	void Parser::markdown(std::unique_ptr<AbstractMarkdown> markdown_engine)
 	{
 		_markdown = std::move(markdown_engine);
@@ -172,9 +228,6 @@ namespace Markdown
 	
 	std::string Parser::_get_stylesheet(const std::string &path) const
 	{
-		static const std::string link = "<link rel='stylesheet' "
-		"type='text/css' href='";
-		
 		auto include_mode = Configurable::get("include-mode");
 		
 		if (include_mode == "embed")
@@ -186,14 +239,14 @@ namespace Markdown
 		
 		else if(include_mode == "local")
 		{
-			return link + path + "/style.css'>\n";
+			return _link.first + path + "/style.css" + _link.second;
 		}
 		
 		else if (include_mode == "network")
 		{
 			auto url = _read_file(path + "/network.url");
 			
-			return link + url + "'>\n";
+			return _link.first + url + _link.second;
 		}
 		
 		else throw ConfigurationValueException("include-mode", include_mode);
@@ -201,30 +254,25 @@ namespace Markdown
 	
 	std::string Parser::_get_script(const std::string &path) const
 	{
-		static const std::string open = "<script type='text/"
-									    "javascript' src='";
-		
-		static const std::string close = "'></script>\n";
-		
 		auto include_mode = Configurable::get("include-mode");
 		
 		if (include_mode == "embed")
 		{
 			auto css = _read_file(path + "/script.js");
 			
-			return "<script>\n" + css + close;
+			return "<script>\n" + css + _script.second;
 		}
 		
 		else if(include_mode == "local")
 		{
-			return open + path + "/script.js" + close;
+			return _script.first + path + "/script.js" + _script.second;
 		}
 		
 		else if (include_mode == "network")
 		{
 			auto url = _read_file(path + "/network.url");
 			
-			return open + url + close;
+			return _script.first + url + _script.second;
 		}
 		
 		else throw ConfigurationValueException("include-mode", include_mode);
@@ -347,13 +395,41 @@ namespace Markdown
 		
 		if (code_style == "none") return "";
 		
+		// highlight.js uses underscores, we use hyphens
 		std::replace(code_style.begin(), code_style.end(), '-', '_');
 		
 		auto html = _get_stylesheet("../../style/code/themes/" + code_style);
 			
 		html += _get_script("../../style/code/highlight");
 			
-		html += "<script>hljs.initHighlightingOnLoad();</script>";
+		html += "<script>hljs.initHighlightingOnLoad();</script>\n";
+		
+		return html;
+	}
+	
+	std::string Parser::_add_custom_css()
+	{
+		std::string html;
+		
+		if (! _stylesheet_path.empty())
+		{
+			if (Configurable::get("include-mode") == "embed")
+			{
+				if (_stylesheet.empty())
+				{
+					_stylesheet = _read_file(_stylesheet_path);
+				}
+				
+				html += "<style>\n" + _stylesheet + "</style>\n";
+			}
+			
+			else html += _link.first + _stylesheet_path + _link.second;
+		}
+		
+		if (! _custom_css.empty())
+		{
+			html += "<style>\n" + _custom_css + "</style>\n";
+		}
 		
 		return html;
 	}

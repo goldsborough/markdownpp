@@ -32,11 +32,13 @@ namespace Markdown
 		
 		static const Configurable::settings_t default_settings;
 		
-		Parser(const Configurable::settings_t& settings = default_settings);
+		Parser(const Configurable::settings_t& settings = default_settings,
+			   const std::string& stylesheet_path = std::string());
 		
 		Parser(std::unique_ptr<AbstractMarkdown> markdown_engine,
 			   std::unique_ptr<AbstractMath> math_engine,
-			   const Configurable::settings_t& settings = default_settings);
+			   const Configurable::settings_t& settings = default_settings,
+			   const std::string& stylesheet_path = std::string());
 		
 		Parser(const Parser& other) = delete;
 		
@@ -51,7 +53,7 @@ namespace Markdown
 		virtual ~Parser();
 		
 		
-		virtual std::string render(std::string markdown) const;
+		virtual std::string render(std::string markdown);
 		
 		virtual std::string render_file(const std::string& path);
 		
@@ -59,6 +61,20 @@ namespace Markdown
 								 const std::string& destination);
 		
 		virtual std::string snippet(std::string markdown) const;
+		
+		
+		virtual void stylesheet(const std::string& path);
+		
+		virtual const std::string& stylesheet() const;
+		
+		virtual void remove_stylesheet();
+		
+		
+		virtual void add_css(const std::string& css);
+		
+		virtual const std::string& custom_css() const;
+		
+		virtual void remove_custom_css();
 		
 		
 		virtual void markdown(std::unique_ptr<AbstractMarkdown> markdown_engine);
@@ -78,6 +94,14 @@ namespace Markdown
 		using equations_t = std::vector<std::string>;
 		
 		using extraction_t = std::pair<equations_t, equations_t>;
+		
+		using tag_t = std::pair<std::string, std::string>;
+		
+		
+		static const tag_t _link;
+		
+		static const tag_t _script;
+		
 		
 		std::string _get_stylesheet(const std::string& path) const;
 		
@@ -99,10 +123,18 @@ namespace Markdown
 		
 		std::string _enable_highlighting() const;
 		
+		std::string _add_custom_css();
+		
 		
 		std::unique_ptr<AbstractMarkdown> _markdown;
 		
 		std::unique_ptr<AbstractMath> _math;
+		
+		std::string _stylesheet_path;
+		
+		std::string _stylesheet;
+		
+		std::string _custom_css;
 	};
 }
 
