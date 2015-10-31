@@ -22,6 +22,8 @@ namespace Markdown
 	*	@brief Renders Math to HTML.
 	*
 	*	@details Uses <a href="khan.github.io/KaTeX">KaTeX</a>.
+	*			 Configuration (key : values [default]):
+	*			 + all-display-math	: (true | false) [false]
 	*
 	***************************************************************************/
 

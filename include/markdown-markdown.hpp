@@ -25,6 +25,15 @@ namespace Markdown
 	*	@brief The default markdown-rendering engine.
 	*
 	*	@details Uses <a href="https://github.com/hoedown/hoedown">hoedown</a>.
+	*			 Configuration (key : values [default]):
+	*			 + tables 		: (true | false) [true]
+	*			 + fenced-code 	: (true | false) [true]
+	*			 + footnotes 	: (true | false) [true]
+	*			 + autolink 	: (true | false) [true]
+	*			 + strike 		: (true | false) [true]
+	*			 + underline 	: (true | false) [true]
+	*			 + quote 		: (true | false) [true]
+	*			 + superscript 	: (true | false) [true]
 	*
 	***************************************************************************/
 

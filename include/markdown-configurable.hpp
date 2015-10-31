@@ -143,13 +143,13 @@ namespace Markdown
 		*
 		*	@brief Retrieves a value of a given type for a key.
 		*
+		*	@details Example: `bool truth = object.get<bool>("x-enabled")`
+		*
 		*	@param key The key to configure.
 		*
 		*	@tparam	R The type with which to return the value.
 		*
 		*	@return A value with the specified type.
-		*
-		*	@example `bool truth = object.get<bool>("x-enabled")`
 		*
 		***********************************************************************/
 		

@@ -38,6 +38,13 @@ namespace Markdown
 	*
 	*	@brief Handles snippet and file parsing.
 	*
+	*	@details Configuration (key : values [default]):
+	*			 + enable-math 		: (true | false) [true]
+	*			 + enable-code 		: (true | false) [true]
+	*			 + markdown-style 	: (see themes/markdown) [github]
+	*			 + code-style		: (see themes/code/style) [solarized-dark]
+	*			 + include-mode		: (embed|local|network) [network]
+	*
 	***************************************************************************/
 	
 	class Parser : public Configurable
@@ -113,7 +120,7 @@ namespace Markdown
 		*
 		*	@brief Move-constructs the parser.
 		*
-		*	@param The other Parser object.
+		*	@param other The other Parser object.
 		*
 		***********************************************************************/
 		
