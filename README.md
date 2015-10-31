@@ -34,9 +34,9 @@ int main(int argc, const char* argv[])
 }
 ```
 
-## Example
+## Demo
 
-See this README rendered by `markdownpp` [here](https://cdn.rawgit.com/goldsborough/markdownpp/8667ed15723f942fba75d744dd9e2d7a3fa610bc/docs/README.html).
+See this README rendered by `markdownpp` [here](http://goldsborough.github.io/markdownpp/).
 
 ## Documentation
 
