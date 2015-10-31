@@ -22,6 +22,8 @@
 		7A7016171BE2E3E300662E38 /* markdown-configurable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A7016151BE2E3E300662E38 /* markdown-configurable.cpp */; };
 		7A70161B1BE3E3A000662E38 /* markdown-abstract-math.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A70161A1BE3E3A000662E38 /* markdown-abstract-math.cpp */; };
 		7A70161F1BE3E6C800662E38 /* markdown-abstract-markdown.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A70161E1BE3E6C800662E38 /* markdown-abstract-markdown.cpp */; };
+		7A7016211BE5172600662E38 /* libboost_filesystem.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A7016201BE5172600662E38 /* libboost_filesystem.dylib */; };
+		7A7016231BE5188A00662E38 /* libboost_system.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A7016221BE5188A00662E38 /* libboost_system.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -59,6 +61,8 @@
 		7A70161A1BE3E3A000662E38 /* markdown-abstract-math.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "markdown-abstract-math.cpp"; sourceTree = "<group>"; };
 		7A70161D1BE3E68500662E38 /* markdown-abstract-markdown.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = "markdown-abstract-markdown.hpp"; sourceTree = "<group>"; };
 		7A70161E1BE3E6C800662E38 /* markdown-abstract-markdown.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "markdown-abstract-markdown.cpp"; sourceTree = "<group>"; };
+		7A7016201BE5172600662E38 /* libboost_filesystem.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libboost_filesystem.dylib; path = ../../../../../usr/local/Cellar/boost/1.58.0/lib/libboost_filesystem.dylib; sourceTree = "<group>"; };
+		7A7016221BE5188A00662E38 /* libboost_system.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libboost_system.dylib; path = ../../../../../usr/local/Cellar/boost/1.58.0/lib/libboost_system.dylib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +70,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7A7016231BE5188A00662E38 /* libboost_system.dylib in Frameworks */,
+				7A7016211BE5172600662E38 /* libboost_filesystem.dylib in Frameworks */,
 				7A7016141BE2D20300662E38 /* libhoedown.so.3 in Frameworks */,
 				7A7016121BE2CFB700662E38 /* libhoedown.a in Frameworks */,
 				7A70160D1BE2C74800662E38 /* libv8_base.a in Frameworks */,
@@ -83,6 +89,8 @@
 		7A1FFCA51BD7C8B000FD092F = {
 			isa = PBXGroup;
 			children = (
+				7A7016221BE5188A00662E38 /* libboost_system.dylib */,
+				7A7016201BE5172600662E38 /* libboost_filesystem.dylib */,
 				7A7016131BE2D20300662E38 /* libhoedown.so.3 */,
 				7A7016111BE2CFB700662E38 /* libhoedown.a */,
 				7A7016091BE2C74800662E38 /* libv8_base.a */,
@@ -286,11 +294,14 @@
 				HEADER_SEARCH_PATHS = (
 					"/usr/local/Cellar/v8/4.5.103.35/**",
 					/usr/local/include/,
+					/usr/local/Cellar/boost/1.58.0/include,
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					/usr/local/Cellar/v8/4.5.103.35/lib,
+					/usr/local/Cellar/boost/1.58.0/lib/,
 					/usr/local/lib,
+					/usr/local/Cellar/boost/1.58.0/lib,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -304,11 +315,14 @@
 				HEADER_SEARCH_PATHS = (
 					"/usr/local/Cellar/v8/4.5.103.35/**",
 					/usr/local/include/,
+					/usr/local/Cellar/boost/1.58.0/include,
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					/usr/local/Cellar/v8/4.5.103.35/lib,
+					/usr/local/Cellar/boost/1.58.0/lib/,
 					/usr/local/lib,
+					/usr/local/Cellar/boost/1.58.0/lib,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

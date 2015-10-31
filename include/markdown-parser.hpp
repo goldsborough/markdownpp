@@ -8,7 +8,6 @@
 #include <string>
 #include <vector>
 
-
 namespace Markdown
 {
 	class AbstractMarkdown;
@@ -124,7 +123,7 @@ namespace Markdown
 		virtual void _convert_math(extraction_t& equations) const;
 		
 		virtual void _insert_math(std::string& html,
-						  extraction_t& equations) const;
+								  extraction_t& equations) const;
 		
 		virtual std::string _read_file(const std::string& path) const;
 		
@@ -132,8 +131,10 @@ namespace Markdown
 		
 		virtual std::string _add_custom_css();
 		
-		virtual inline std::string _make_tag(const tag_t& tag,
-											 const std::string& contents) const;
+		virtual inline std::string
+		_make_tag(const tag_t& tag, const std::string& contents) const;
+		
+		virtual std::string _join_paths(const std::vector<std::string>& paths) const;
 		
 		
 		std::unique_ptr<AbstractMarkdown> _markdown;

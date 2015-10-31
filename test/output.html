@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset='utf-8'/>
+<link type='text/css' rel='stylesheet' href='./katex/style.css'>
+<link type='text/css' rel='stylesheet' href='./style/themes/github/style.css'>
+<link type='text/css' rel='stylesheet' href='./style/code/themes/solarized_dark/style.css'>
+<script type='text/javascript' src='./style/code/highlight/script.js'></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<link type='text/css' rel='stylesheet' href='test/additional.css'>
+</head>
+<body>
+<h1 id="toc_0">latexpp</h1>
+
+<p><em>latexpp</em> is a first-of-its kind C++ library for generating <code>LaTeX</code> equations via C++. It supports conversion of <code>LaTeX</code> equations to HTML as well as JPG, PNG and SVG image formats.</p>
+
+<h2 id="toc_1">Usage</h2>
+
+<pre><code class="language-C++">#include &quot;latex.hpp&quot;
+
+int main(int argc, const char* argv[])
+{
+    // Single class
+    Latex latex;
+
+    const std::string equation = &quot;\\sum_{i=1}^{N} i = \\frac{n(n + 1)}{2}&quot;;
+
+    // Convert to PNG, store in &#39;equation.png&#39;
+    latex.to_png(equation, &quot;equation.png&quot;);
+
+    // Convert to HTML, returns a HTML snippet
+    std::string html = latex.to_html(equation);
+}
+</code></pre>
+
+<p><code>equation.png</code>:</p>
+
+<p><img src="https://raw.githubusercontent.com/goldsborough/latexpp/master/docs/img/equation.png" alt="equation.png"></p>
+
+<h2 id="toc_2">Implementation Overview</h2>
+
+<p><em>latexpp</em> uses <a href="https://khan.github.io/KaTeX/"><code>KaTeX</code></a> to render <code>LaTeX</code> to HTML. Because <code>KaTeX</code> is a JavaScript library, <em>latexpp</em> uses <a href="https://github.com/v8/v8">Google&#39;s V8 engine</a> to write JavaScript from C++. Image output is enabled by the <a href="http://wkhtmltopdf.org">wkhtmltox</a> C library.</p>
+
+<p>To build this project, you will need:</p>
+
+<ul>
+<li>The <a href="https://github.com/v8/v8">Google V8 engine</a> to compile JavaScript.</li>
+<li>The <a href="http://wkhtmltopdf.org">wkhtmltox</a> library for image output.</li>
+<li><a href="http://www.boost.org">Boost</a> for some cross-platform directory operations (can be dropped as a dependency if platform-indpendence is not required, or when the C++ standard committee decides to roll out boost&#39;s filesystem library in the C++ standard library.)</li>
+</ul>
+
+<p><code>KaTeX</code> is not a dependency as it is entirely contained in the <code>katex</code> folder.</p>
+
+<h2 id="toc_3">Documentation</h2>
+
+<p>You can build extensive documentation with <code>doxygen</code>. See the <code>doxyfile</code> in the <code>docs/</code> folder. There are also some example programs in the <code>examples</code> folder.</p>
+
+<h2 id="toc_4">LICENSE</h2>
+
+<p>This project is released under the <a href="http://goldsborough.mit-license.org">MIT License</a>. For more information, see the LICENSE file.</p>
+
+<h2 id="toc_5">Authors</h2>
+
+<p><a href="http://goldsborough.me">Peter Goldsborough</a> + <a href="https://goo.gl/IpUmJn">cat</a> :heart:</p>
+
+<p><a href="https://gratipay.com/~goldsborough/"><img src="http://img.shields.io/gratipay/goldsborough.png?style=flat-square"></a></p>
+</body>
+</html>

@@ -4,6 +4,7 @@
 #include "markdown-math.hpp"
 #include "markdown-parser.hpp"
 
+#include <boost/filesystem.hpp>
 #include <fstream>
 #include <regex>
 
@@ -95,13 +96,13 @@ namespace Markdown
 		std::string html = "<!DOCTYPE html>\n<html>\n<head>\n"
 						   "<meta charset='utf-8'/>\n";
 		
-		html += _get_stylesheet("../../katex");
+		html += _get_stylesheet("katex");
 		
 		auto markdown_style = Configurable::get("markdown-style");
 		
 		if (markdown_style != "none")
 		{
-			html += _get_stylesheet("../../style/themes/" + markdown_style);
+			html += _get_stylesheet("style/themes/" + markdown_style);
 		}
 		
 		if (Configurable::get<bool>("enable-code"))
@@ -236,25 +237,50 @@ namespace Markdown
 		return *_math;
 	}
 	
+	std::string Parser::_read_file(const std::string &path) const
+	{
+		std::ifstream file(path);
+		
+		if (! file)
+		{
+			throw FileException("Could not open file '" + path + "'!");
+		}
+		
+		std::string contents;
+		
+		std::copy(std::istreambuf_iterator<char>{file},
+				  std::istreambuf_iterator<char>{},
+				  std::back_inserter(contents));
+		
+		// Strip trailing whitespace
+		auto end = std::find_if_not(contents.rbegin(),
+									contents.rend(),
+									::isspace);
+		
+		contents.erase(end.base(), contents.end());
+		
+		return contents;
+	}
+	
 	std::string Parser::_get_stylesheet(const std::string &path) const
 	{
 		auto include_mode = Configurable::get("include-mode");
 		
 		if (include_mode == "embed")
 		{
-			auto css = _read_file(_root + path + "/style.css");
+			auto css = _read_file(_join_paths({path, "style.css"}));
 			
 			return _make_tag(_style, css);
 		}
 		
 		else if(include_mode == "local")
 		{
-			return _make_tag(_link, _root + path + "/style.css");
+			return _make_tag(_link, _join_paths({path, "style.css"}));
 		}
 		
 		else if (include_mode == "network")
 		{
-			auto url = _read_file(path + "/network.url");
+			auto url = _read_file(_join_paths({path, "network.url"}));
 			
 			return _make_tag(_link, url);
 		}
@@ -268,19 +294,21 @@ namespace Markdown
 		
 		if (include_mode == "embed")
 		{
-			auto css = _read_file(_root + path + "/script.js");
+			auto css = _read_file(_join_paths({path, "script.js"}));
 			
 			return _make_tag(_embedded_script, css);
 		}
 		
 		else if(include_mode == "local")
 		{
-			return _make_tag(_external_script, _root + path + "/script.js");
+			auto full_path = _join_paths({path, "script.js"});
+			
+			return _make_tag(_external_script, full_path);
 		}
 		
 		else if (include_mode == "network")
 		{
-			auto url = _read_file(path + "/network.url");
+			auto url = _read_file(_join_paths({path, "network.url"}));
 			
 			return _make_tag(_external_script, url);
 		}
@@ -374,31 +402,6 @@ namespace Markdown
 		}
 	}
 	
-	std::string Parser::_read_file(const std::string &path) const
-	{
-		std::ifstream file(path);
-		
-		if (! file)
-		{
-			throw FileException("Could not open file '" + path + "'!");
-		}
-		
-		std::string contents;
-		
-		std::copy(std::istreambuf_iterator<char>{file},
-				  std::istreambuf_iterator<char>{},
-				  std::back_inserter(contents));
-		
-		// Strip trailing whitespace
-		auto end = std::find_if_not(contents.rbegin(),
-									contents.rend(),
-									::isspace);
-		
-		contents.erase(end.base(), contents.end());
-		
-		return contents;
-	}
-	
 	std::string Parser::_enable_code() const
 	{
 		auto code_style = Configurable::get("code-style");
@@ -448,5 +451,22 @@ namespace Markdown
 										 const std::string &contents) const
 	{
 		return tag.first + contents + tag.second;
+	}
+	
+	std::string Parser::_join_paths(const std::vector<std::string> &paths) const
+	{
+		if (paths.empty())
+		{
+			throw std::runtime_error("Nothing to join!");
+		}
+		
+		boost::filesystem::path result(_root);
+		
+		for (const auto& path : paths)
+		{
+			result /= path;
+		}
+		
+		return result.string();
 	}
 }
