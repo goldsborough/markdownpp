@@ -4,10 +4,10 @@
 
 Markdownpp is a first-of-its-kind Markdown solution for C++. It unifies and handles all aspects of a modern, powerful and flexible Markdown tool including:
 
-* Markdown conversion with a nice object-oriented interface.
-* `LaTeX` integration for mathematical formulas.
-* Syntax highlighting with [highlight.js](https://highlightjs.org).
-* Multiple Markdown themes, such as GitHub's or Solarized.
+* Markdown conversion with a sweet object-oriented interface.
+* __LaTeX__ integration for mathematical formulas.
+* Syntax highlighting with [highlight.js](https://highlightjs.org) and its __65__ themes.
+* __8__ Markdown themes, such as GitHub's or Solarized.
 
 ## Usage
 
@@ -36,7 +36,7 @@ int main(int argc, const char* argv[])
 
 ## Demo
 
-See this README rendered by `markdownpp` [here](http://goldsborough.github.io/markdownpp/).
+See this README rendered by __markdownpp__ with the *solarized-dark* markdown-theme and *xcode* syntax theme [here](http://goldsborough.github.io/markdownpp/).
 
 ## Documentation
 
