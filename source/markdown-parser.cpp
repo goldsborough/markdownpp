@@ -294,9 +294,11 @@ namespace Markdown
 		
 		if (include_mode == "embed")
 		{
-			auto css = _read_file(_join_paths({path, "script.js"}));
+			auto raw = _read_file(_join_paths({path, "script.js"}));
 			
-			return _make_tag(_embedded_script, css);
+			auto script = _escape_script(raw);
+			
+			return _make_tag(_embedded_script, script);
 		}
 		
 		else if(include_mode == "local")
@@ -430,9 +432,9 @@ namespace Markdown
 			
 			if (include_mode == "embed")
 			{
-				auto css = _read_file(_stylesheet);
+				auto css = _read_file(_join_paths({_stylesheet}));
 				
-				html += _style.first + css + _style.first;
+				html += _style.first + css + _style.second;
 			}
 			
 			else html += _link.first + _stylesheet + _link.second;
@@ -468,5 +470,13 @@ namespace Markdown
 		}
 		
 		return result.string();
+	}
+	
+	inline std::string
+	Parser::_escape_script(const std::string &raw_script) const
+	{
+		static const std::regex pattern("<\\/(script.*?)>");
+		
+		return std::regex_replace(raw_script, pattern, "<\\/$1>");
 	}
 }
