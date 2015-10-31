@@ -36,7 +36,7 @@ int main(int argc, const char* argv[])
 
 ## Example
 
-See this README rendered by `markdownpp` [here](https://raw.githubusercontent.com/goldsborough/markdownpp/master/docs/README.html?token=AGIcm6im9NVHtx5ilWtAOMHq4EydlZTTks5WPkHDwA%3D%3D).
+See this README rendered by `markdownpp` [here](https://cdn.rawgit.com/goldsborough/markdownpp/8667ed15723f942fba75d744dd9e2d7a3fa610bc/docs/README.html).
 
 ## Documentation
 
