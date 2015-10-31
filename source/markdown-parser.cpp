@@ -362,7 +362,7 @@ namespace Markdown
 							 marker);
 			
 			// Skip the marker and the trailing $
-			std::advance(begin, match.position(1) + marker.size() + 2);
+			std::advance(begin, match.position(1) + marker.size() + 1);
 		}
 		
 		return equations;

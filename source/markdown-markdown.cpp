@@ -8,12 +8,12 @@ namespace Markdown
 	const Configurable::settings_t Markdown::default_settings = {
 		{"tables", "1"},
 		{"fenced-code", "1"},
-		{"footnotes", "0"},
-		{"autolink", "0"},
+		{"footnotes", "1"},
+		{"autolink", "1"},
 		{"strike", "1"},
 		{"underline", "1"},
-		{"quote", "0"},
-		{"superscript", "0"},
+		{"quote", "1"},
+		{"superscript", "1"},
 	};
 	
 	Markdown::Markdown(const Configurable::settings_t& settings)

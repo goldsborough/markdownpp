@@ -154,14 +154,21 @@ namespace Markdown
 	
 	std::string Math::_escape(std::string source) const
 	{
-		for (auto i = source.begin(); i != source.end(); ++i)
+		for (auto i = source.begin(); i != source.end(); )
 		{
 			if (*i == '\\')
 			{
 				i = source.insert(i, '\\');
 				
-				++i;
+				std::advance(i, 2);
 			}
+			
+			else if (*i == '\n' || *i == '\t')
+			{
+				i = source.erase(i);
+			}
+			
+			else ++i;
 		}
 		
 		return source;
