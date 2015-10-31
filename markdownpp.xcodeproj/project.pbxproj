@@ -117,12 +117,12 @@
 		7A1FFCBA1BD7C92400FD092F /* source */ = {
 			isa = PBXGroup;
 			children = (
-				7A1FFCC41BD7DA6000FD092F /* markdown-parser.cpp */,
+				7A70161E1BE3E6C800662E38 /* markdown-abstract-markdown.cpp */,
+				7A70161A1BE3E3A000662E38 /* markdown-abstract-math.cpp */,
+				7A7016151BE2E3E300662E38 /* markdown-configurable.cpp */,
 				7A1FFCC21BD7DA5600FD092F /* markdown-markdown.cpp */,
 				7A1FFCC71BD7DA7100FD092F /* markdown-math.cpp */,
-				7A7016151BE2E3E300662E38 /* markdown-configurable.cpp */,
-				7A70161A1BE3E3A000662E38 /* markdown-abstract-math.cpp */,
-				7A70161E1BE3E6C800662E38 /* markdown-abstract-markdown.cpp */,
+				7A1FFCC41BD7DA6000FD092F /* markdown-parser.cpp */,
 			);
 			path = source;
 			sourceTree = "<group>";
@@ -130,12 +130,12 @@
 		7A1FFCBB1BD7C92C00FD092F /* include */ = {
 			isa = PBXGroup;
 			children = (
-				7A7016191BE3E31600662E38 /* markdown-abstract-math.hpp */,
-				7A1FFCBC1BD7C94900FD092F /* markdown-markdown.hpp */,
-				7A1FFCBD1BD7CA5400FD092F /* markdown-parser.hpp */,
-				7A1FFCBE1BD7D29C00FD092F /* markdown-math.hpp */,
-				7A1FFCC11BD7D8A600FD092F /* markdown-configurable.hpp */,
 				7A70161D1BE3E68500662E38 /* markdown-abstract-markdown.hpp */,
+				7A7016191BE3E31600662E38 /* markdown-abstract-math.hpp */,
+				7A1FFCC11BD7D8A600FD092F /* markdown-configurable.hpp */,
+				7A1FFCBC1BD7C94900FD092F /* markdown-markdown.hpp */,
+				7A1FFCBE1BD7D29C00FD092F /* markdown-math.hpp */,
+				7A1FFCBD1BD7CA5400FD092F /* markdown-parser.hpp */,
 			);
 			path = include;
 			sourceTree = "<group>";

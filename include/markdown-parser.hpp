@@ -1,3 +1,11 @@
+/***************************************************************************//*!
+*
+*	@file markdown-parser.hpp
+*
+*	@author Peter Goldsborough.
+*
+*******************************************************************************/
+
 #ifndef MARKDOWNPP_PARSER_HPP
 #define MARKDOWNPP_PARSER_HPP
 

@@ -6,6 +6,8 @@ namespace Markdown
 	: _settings(settings)
 	{ }
 	
+	Configurable::~Configurable() = default;
+	
 	void Configurable::configure(const std::string &key,
 								 const std::string &value)
 	{

@@ -44,7 +44,7 @@ You can build extensive documentation with `doxygen`. See the `doxyfile` in the 
 
 ## LICENSE
 
-This project is released under the [MIT License](http://goldsborough.mit-license.org). For more information, see the LICENSE file.
+This project is released under the [MIT License](http://goldsborough.mit-license.org). For more information, see the `LICENSE` file.
 
 ## Authors
 
