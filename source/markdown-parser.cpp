@@ -26,9 +26,10 @@ namespace Markdown
 	
 	const Configurable::settings_t Parser::default_settings = {
 		{"enable-math", "1"},
-		{"markdown-style", "witex"},
+		{"enable-highlighting", "1"},
+		{"markdown-style", "github"},
 		{"code-style", "none"},
-		{"css-mode", "embed"}
+		{"css-mode", "network"}
 	};
 	
 	Parser::Parser(const Configurable::settings_t& settings)
