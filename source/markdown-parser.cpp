@@ -28,8 +28,8 @@ namespace Markdown
 		{"enable-math", "1"},
 		{"enable-highlighting", "1"},
 		{"markdown-style", "github"},
-		{"code-style", "none"},
-		{"css-mode", "network"}
+		{"code-style", "solarized-dark"},
+		{"include-mode", "network"}
 	};
 	
 	Parser::Parser(const Configurable::settings_t& settings)
@@ -72,9 +72,8 @@ namespace Markdown
 	
 	std::string Parser::render(std::string markdown) const
 	{
-		std::string html = "<!DOCTYPE html>\n<html>\n";
-		
-		html += "<head>\n<meta charset='utf-8'/>\n";
+		std::string html = "<!DOCTYPE html>\n<html>\n<head>\n"
+						   "<meta charset='utf-8'/>\n";
 		
 		html += _get_stylesheet("../../katex");
 		
@@ -82,17 +81,15 @@ namespace Markdown
 		
 		if (markdown_style != "none")
 		{
-			html += _get_stylesheet("../../themes/markdown/" + markdown_style);
+			html += _get_stylesheet("../../style/themes/" + markdown_style);
 		}
 		
-		auto code_style = Configurable::get("code-style");
-
-		if (code_style != "none")
+		if (Configurable::get<bool>("enable-highlighting"))
 		{
-			html += _get_stylesheet("../../themes/code/" + code_style);
+			html += _enable_highlighting();
 		}
 		
-		html += "</head>\n<body class='markdown-body'>\n";
+		html += "</head>\n<body>\n";
 		html += snippet(markdown);
 		html += "</body>\n</html>";
 		
@@ -173,33 +170,64 @@ namespace Markdown
 		return *_math;
 	}
 	
-	inline std::string Parser::_get_stylesheet(const std::string &path) const
+	std::string Parser::_get_stylesheet(const std::string &path) const
 	{
 		static const std::string link = "<link rel='stylesheet' "
-									    "type='text/css' href='";
+		"type='text/css' href='";
 		
-		auto css_mode = Configurable::get("css-mode");
+		auto include_mode = Configurable::get("include-mode");
 		
-		if (css_mode == "embed")
+		if (include_mode == "embed")
 		{
 			auto css = _read_file(path + "/style.css");
 			
 			return "<style>\n" + css + "</style>\n";
 		}
 		
-		else if(css_mode == "local")
+		else if(include_mode == "local")
 		{
 			return link + path + "/style.css'>\n";
 		}
 		
-		else if (css_mode == "network")
+		else if (include_mode == "network")
 		{
 			auto url = _read_file(path + "/network.url");
 			
 			return link + url + "'>\n";
 		}
 		
-		else throw ConfigurationValueException("css-mode", css_mode);
+		else throw ConfigurationValueException("include-mode", include_mode);
+	}
+	
+	std::string Parser::_get_script(const std::string &path) const
+	{
+		static const std::string open = "<script type='text/"
+									    "javascript' src='";
+		
+		static const std::string close = "'></script>\n";
+		
+		auto include_mode = Configurable::get("include-mode");
+		
+		if (include_mode == "embed")
+		{
+			auto css = _read_file(path + "/script.js");
+			
+			return "<script>\n" + css + close;
+		}
+		
+		else if(include_mode == "local")
+		{
+			return open + path + "/script.js" + close;
+		}
+		
+		else if (include_mode == "network")
+		{
+			auto url = _read_file(path + "/network.url");
+			
+			return open + url + close;
+		}
+		
+		else throw ConfigurationValueException("include-mode", include_mode);
 	}
 
 	Parser::extraction_t Parser::_extract_math(std::string& markdown) const
@@ -311,5 +339,22 @@ namespace Markdown
 		contents.erase(end.base(), contents.end());
 		
 		return contents;
+	}
+	
+	std::string Parser::_enable_highlighting() const
+	{
+		auto code_style = Configurable::get("code-style");
+		
+		if (code_style == "none") return "";
+		
+		std::replace(code_style.begin(), code_style.end(), '-', '_');
+		
+		auto html = _get_stylesheet("../../style/code/themes/" + code_style);
+			
+		html += _get_script("../../style/code/highlight");
+			
+		html += "<script>hljs.initHighlightingOnLoad();</script>";
+		
+		return html;
 	}
 }
