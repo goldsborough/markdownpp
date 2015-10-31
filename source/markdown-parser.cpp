@@ -94,6 +94,7 @@ namespace Markdown
 	std::string Parser::render(std::string markdown)
 	{
 		std::string html = "<!DOCTYPE html>\n<html>\n<head>\n"
+						   "<!-- Rendered with markdownpp -->\n"
 						   "<meta charset='utf-8'/>\n";
 		
 		html += _get_stylesheet("katex");
