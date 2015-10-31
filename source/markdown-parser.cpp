@@ -27,7 +27,7 @@ namespace Markdown
 	const Configurable::settings_t Parser::default_settings = {
 		{"enable-math", "1"},
 		{"enable-highlighting", "1"},
-		{"markdown-style", "github"},
+		{"markdown-style", "black"},
 		{"code-style", "solarized-dark"},
 		{"include-mode", "network"}
 	};
