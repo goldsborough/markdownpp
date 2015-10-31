@@ -30,11 +30,13 @@ namespace Markdown
 		
 		static const Configurable::settings_t default_settings;
 		
-		Parser(const Configurable::settings_t& settings = default_settings,
+		Parser(const std::string& root = ".",
+			   const Configurable::settings_t& settings = default_settings,
 			   const std::string& stylesheet_path = std::string());
 		
 		Parser(std::unique_ptr<AbstractMarkdown> markdown_engine,
 			   std::unique_ptr<AbstractMath> math_engine,
+			   const std::string& root = ".",
 			   const Configurable::settings_t& settings = default_settings,
 			   const std::string& stylesheet_path = std::string());
 		
@@ -75,6 +77,11 @@ namespace Markdown
 		virtual void remove_custom_css();
 		
 		
+		virtual void root(const std::string& root);
+		
+		virtual const std::string& root() const;
+		
+		
 		virtual void markdown(std::unique_ptr<AbstractMarkdown> markdown_engine);
 		
 		virtual void math(std::unique_ptr<AbstractMath> math_engine);
@@ -98,7 +105,9 @@ namespace Markdown
 		
 		static const tag_t _link;
 		
-		static const tag_t _script;
+		static const tag_t _external_script;
+		
+		static const tag_t _embedded_script;
 		
 		static const tag_t _style;
 		
@@ -119,20 +128,23 @@ namespace Markdown
 		
 		virtual std::string _read_file(const std::string& path) const;
 		
-		virtual std::string _enable_highlighting() const;
+		virtual std::string _enable_code() const;
 		
 		virtual std::string _add_custom_css();
+		
+		virtual inline std::string _make_tag(const tag_t& tag,
+											 const std::string& contents) const;
 		
 		
 		std::unique_ptr<AbstractMarkdown> _markdown;
 		
 		std::unique_ptr<AbstractMath> _math;
 		
-		std::string _stylesheet_path;
-		
 		std::string _stylesheet;
 		
 		std::string _custom_css;
+		
+		std::string _root;
 	};
 }
 
