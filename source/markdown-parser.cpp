@@ -102,7 +102,7 @@ namespace Markdown
 		
 		if (markdown_style != "none")
 		{
-			html += _get_stylesheet("style/themes/" + markdown_style);
+			html += _get_stylesheet("themes/markdown/" + markdown_style);
 		}
 		
 		if (Configurable::get<bool>("enable-code"))
@@ -413,9 +413,9 @@ namespace Markdown
 		// highlight.js uses underscores, we use hyphens
 		std::replace(code_style.begin(), code_style.end(), '-', '_');
 		
-		auto html = _get_stylesheet("style/code/themes/" + code_style);
+		auto html = _get_stylesheet("themes/code/style/" + code_style);
 			
-		html += _get_script("style/code/highlight");
+		html += _get_script("themes/code/highlight");
 			
 		html += "<script>hljs.initHighlightingOnLoad();</script>\n";
 		

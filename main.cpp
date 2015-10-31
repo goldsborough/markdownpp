@@ -10,7 +10,7 @@ int main(int argc, const char* argv[])
 	
 	parser.configure("enable-code", true);
 	
-	parser.configure("include-mode", "network");
+	parser.configure("include-mode", "local");
 	
 	parser.stylesheet("test/additional.css");
 	
