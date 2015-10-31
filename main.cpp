@@ -4,13 +4,13 @@
 
 int main(int argc, const char* argv[])
 {
-	Markdown::Parser parser;
+	Markdown::Parser parser("/Users/petergoldsborough/Documents/Projects/markdownpp");
 
-	parser.configure("code-style", "solarized-dark");
+	parser.configure("code-style", "railscasts");
 	
 	parser.configure("enable-code", true);
 	
-	parser.configure("include-mode", "local");
+	parser.configure("include-mode", "network");
 	
 	parser.stylesheet("test/additional.css");
 	
