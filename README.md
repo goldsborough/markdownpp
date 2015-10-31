@@ -21,7 +21,7 @@ int main(int argc, const char* argv[])
 	Markdown::Parser parser;
 
 	// Flexible key-value configuration
-	parser.configure("markdown-style", "solarized");
+	parser.configure("markdown-style", "solarized-dark");
 
 	// Quick and easy snippet-conversion, returns HTML as std::string
 	// <p><em>hello</em></p>
@@ -35,9 +35,15 @@ int main(int argc, const char* argv[])
 }
 ```
 
+or
+
+```Bash
+$ markdownpp -m solarized-dark -c monokai input.md output.html
+```
+
 ## Demo
 
-See this README rendered by __markdownpp__ with the *solarized-dark* markdown-theme and *xcode* syntax theme [here](http://goldsborough.github.io/markdownpp/).
+See this README rendered by __markdownpp__ with the *solarized-dark* markdown-theme and *xcode* syntax-theme [here](http://goldsborough.github.io/markdownpp/).
 
 ## Documentation
 
