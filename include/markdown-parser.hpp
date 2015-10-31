@@ -15,8 +15,6 @@ namespace Markdown
 	class AbstractMath;
 	class Code;
 	
-	std::string render(const std::string& markdown);
-	
 	std::string snippet(const std::string& markdown);
 	
 	class Parser : public Configurable
@@ -70,7 +68,7 @@ namespace Markdown
 		virtual void remove_stylesheet();
 		
 		
-		virtual void add_css(const std::string& css);
+		virtual void add_custom_css(const std::string& css);
 		
 		virtual const std::string& custom_css() const;
 		
@@ -105,27 +103,25 @@ namespace Markdown
 		static const tag_t _style;
 		
 		
-		std::string _get_stylesheet(const std::string& path) const;
+		virtual std::string _get_stylesheet(const std::string& path) const;
 		
-		std::string _get_script(const std::string& path) const;
+		virtual std::string _get_script(const std::string& path) const;
 		
-		extraction_t _extract_math(std::string& markdown) const;
+		virtual extraction_t _extract_math(std::string& markdown) const;
 		
-		equations_t _extract(std::string& markdown,
+		virtual equations_t _extract(std::string& markdown,
 							 const std::string& pattern) const;
 		
-		void _convert_math(extraction_t& equations) const;
+		virtual void _convert_math(extraction_t& equations) const;
 		
-		void _insert_math(std::string& html,
+		virtual void _insert_math(std::string& html,
 						  extraction_t& equations) const;
 		
-		void _render_equation(std::string& equation) const;
+		virtual std::string _read_file(const std::string& path) const;
 		
-		std::string _read_file(const std::string& path) const;
+		virtual std::string _enable_highlighting() const;
 		
-		std::string _enable_highlighting() const;
-		
-		std::string _add_custom_css();
+		virtual std::string _add_custom_css();
 		
 		
 		std::unique_ptr<AbstractMarkdown> _markdown;

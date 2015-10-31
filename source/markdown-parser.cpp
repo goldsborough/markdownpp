@@ -8,14 +8,7 @@
 #include <regex>
 
 namespace Markdown
-{
-	std::string render(const std::string& markdown)
-	{
-		Parser parser;
-		
-		return parser.render(markdown);
-	}
-	
+{	
 	std::string snippet(const std::string& markdown)
 	{
 		Parser parser;
@@ -182,7 +175,7 @@ namespace Markdown
 	}
 	
 	
-	void Parser::add_css(const std::string& css)
+	void Parser::add_custom_css(const std::string& css)
 	{
 		_custom_css += css;
 	}
