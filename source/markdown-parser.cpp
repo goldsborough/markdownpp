@@ -41,6 +41,11 @@ namespace Markdown
 		"'></script>\n"
 	};
 	
+	const Parser::tag_t Parser::_style = {
+		"<style>\n",
+		"</style>\n"
+	};
+	
 	Parser::Parser(const Configurable::settings_t& settings,
 				   const std::string& stylesheet_path)
 	: Configurable(settings)
@@ -420,7 +425,7 @@ namespace Markdown
 					_stylesheet = _read_file(_stylesheet_path);
 				}
 				
-				html += "<style>\n" + _stylesheet + "</style>\n";
+				html += _style.first + _stylesheet + _style.first;
 			}
 			
 			else html += _link.first + _stylesheet_path + _link.second;
@@ -428,7 +433,7 @@ namespace Markdown
 		
 		if (! _custom_css.empty())
 		{
-			html += "<style>\n" + _custom_css + "</style>\n";
+			html += _style.first + _custom_css + _style.second;
 		}
 		
 		return html;

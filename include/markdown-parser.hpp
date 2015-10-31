@@ -102,6 +102,8 @@ namespace Markdown
 		
 		static const tag_t _script;
 		
+		static const tag_t _style;
+		
 		
 		std::string _get_stylesheet(const std::string& path) const;
 		

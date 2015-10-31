@@ -6,8 +6,8 @@ int main(int argc, const char* argv[])
 {
 	Markdown::Parser parser;
 
-	parser.stylesheet("additional.css");
+	parser.stylesheet("test/additional.css");
 	
-	parser.render_file("../../ignore/test.md",
+	parser.render_file("../../test/test.md",
 					   "../../output.html");
 }
