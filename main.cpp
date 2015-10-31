@@ -6,5 +6,5 @@ int main(int argc, const char* argv[])
 {
 	Markdown::Parser parser("../../", "adjust.css");
 	
-	parser.render_file("README.md", "docs/README.html");
+	parser.render_file("README.md", "docs/index.html");
 }
