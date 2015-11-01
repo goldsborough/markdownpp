@@ -8,7 +8,7 @@
 <link type='text/css' rel='stylesheet' href='http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/styles/xcode.min.css'>
 <script type='text/javascript' src='http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/highlight.min.js'></script>
 <script>hljs.initHighlightingOnLoad();</script>
-<link type='text/css' rel='stylesheet' href='adjust.css'>
+<link type='text/css' rel='stylesheet' href='docs/adjust.css'>
 </head>
 <body>
 <h1 id="toc_0">Markdownpp</h1>
@@ -22,6 +22,7 @@
 <li><strong>LaTeX</strong> integration for mathematical formulas.</li>
 <li>Syntax highlighting with <a href="https://highlightjs.org">highlight.js</a> and its <strong>65</strong> themes.</li>
 <li><strong>8</strong> Markdown themes, such as GitHub&#39;s or Solarized.</li>
+<li>A command-line program accompanying the library.</li>
 </ul>
 
 <h2 id="toc_1">Usage</h2>
@@ -34,7 +35,7 @@ int main(int argc, const char* argv[])
     Markdown::Parser parser;
 
     // Flexible key-value configuration
-    parser.configure(&quot;markdown-style&quot;, &quot;solarized&quot;);
+    parser.configure(&quot;markdown-style&quot;, &quot;solarized-dark&quot;);
 
     // Quick and easy snippet-conversion, returns HTML as std::string
     // &lt;p&gt;&lt;em&gt;hello&lt;/em&gt;&lt;/p&gt;
@@ -48,9 +49,14 @@ int main(int argc, const char* argv[])
 }
 </code></pre>
 
+<p>or</p>
+
+<pre><code class="language-Bash">$ markdownpp -m solarized-dark -c monokai input.md output.html
+</code></pre>
+
 <h2 id="toc_2">Demo</h2>
 
-<p>See this README rendered by <strong>markdownpp</strong> with the <em>solarized-dark</em> markdown-theme and <em>xcode</em> syntax theme <a href="http://goldsborough.github.io/markdownpp/">here</a>.</p>
+<p>See this README rendered by <strong>markdownpp</strong> with the <em>solarized-dark</em> markdown-theme and <em>xcode</em> syntax-theme <a href="http://goldsborough.github.io/markdownpp/">here</a>.</p>
 
 <h2 id="toc_3">Documentation</h2>
 
