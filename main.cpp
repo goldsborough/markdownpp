@@ -12,6 +12,8 @@ int main(int argc, const char* argv[])
 	std::string markdown_style;
 	std::string code_style;
 	std::string include_mode;
+	std::string stylesheet;
+	std::string root;
 	std::string input;
 	std::string output;
 
@@ -37,6 +39,19 @@ int main(int argc, const char* argv[])
 				->default_value("network")
 				->value_name("MODE"),
 			"set the include-mode"
+		)
+		(
+			"stylesheet,s",
+			po::value<std::string>(&stylesheet)
+				->value_name("PATH"),
+			"add a stylesheet"
+		)
+		(
+			"root,r",
+			po::value<std::string>(&root)
+				->default_value(".")
+				->value_name("PATH"),
+			"set the root path"
 		)
 		(
 			"input,i",
@@ -77,7 +92,7 @@ int main(int argc, const char* argv[])
 
 		po::notify(variables);
 		
-		Markdown::Parser parser(".", "adjust.css");
+		Markdown::Parser parser(root, stylesheet);
 	
 		parser.configure("include-mode", include_mode);
 	
