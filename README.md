@@ -1,8 +1,8 @@
-# Markdownpp
+# Markdown++
 
 [![GitHub license](https://img.shields.io/github/license/mashape/apistatus.svg?style=flat-square)](http://goldsborough.mit-license.org)
 
-Markdownpp is a first-of-its-kind Markdown solution for C++. It unifies and handles all aspects of a modern, powerful and flexible Markdown tool including:
+Markdown++ is a first-of-its-kind Markdown solution for C++. It unifies and handles all aspects of a modern, powerful and flexible Markdown tool including:
 
 * Markdown conversion with a sweet object-oriented interface.
 * __LaTeX__ integration for all things math.
@@ -43,7 +43,7 @@ $ markdownpp -m solarized-dark -c monokai input.md output.html
 
 ## Demo
 
-See this README rendered by __markdownpp__ with the *solarized-dark* markdown-theme and *xcode* syntax-theme [here](http://www.goldsborough.me/markdownpp/).
+See this README rendered by __markdown++__ with the *solarized-dark* markdown-theme and *xcode* syntax-theme [here](http://www.goldsborough.me/markdownpp/).
 
 ## Documentation
 
