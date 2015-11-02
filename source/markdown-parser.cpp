@@ -1,8 +1,9 @@
+#include "markdown-parser.hpp"
+
 #include "markdown-abstract-markdown.hpp"
 #include "markdown-abstract-math.hpp"
 #include "markdown-markdown.hpp"
 #include "markdown-math.hpp"
-#include "markdown-parser.hpp"
 
 #include <boost/filesystem.hpp>
 #include <fstream>
@@ -125,7 +126,7 @@ namespace Markdown
 	
 	std::string Parser::render_file(const std::string &path)
 	{
-		auto markdown = _read_file(_join_paths({path}));
+		auto markdown = _read_file(path);
 		
 		return render(markdown);
 	}
@@ -133,7 +134,7 @@ namespace Markdown
 	void Parser::render_file(const std::string &path,
 							   const std::string &destination)
 	{
-		std::ofstream file(_join_paths({destination}), std::ios::trunc);
+		std::ofstream file(destination, std::ios::trunc);
 		
 		if (! file)
 		{
