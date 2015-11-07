@@ -132,3 +132,7 @@ latex/
 
 ## Other
 ignore/
+
+## Executables
+markdownpp
+markdownpp.exe
