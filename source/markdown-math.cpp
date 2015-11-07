@@ -12,7 +12,9 @@ namespace Markdown
 	Math::V8 Math::_v8;
 	
 	const Configurable::settings_t Math::default_settings = {
-		{"all-display-math", "0"}
+		{"all-display-math", "0"},
+		{"throw-on-error", "1"},
+		{"error-color", "##CC0000"}
 	};
 	
 	Math::Math(const std::string& katex_path,
@@ -163,7 +165,9 @@ namespace Markdown
 	{
 		std::string source = "katex.renderToString('";
 		
-		source += _escape(expression) + "', {'displayMode': ";
+		source += _escape(expression);
+		
+		source += "', {'displayMode': ";
 		
 		// all-display-math | display_math | result
 		// 		 0		    |	  0		   |   0
@@ -174,7 +178,17 @@ namespace Markdown
 		
 		source += display_math ? "true" : "false";
 		
-		return source + "});";
+		source += ", 'throwOnError': ";
+		
+		bool throw_on_error = Configurable::get<bool>("throw-on-error");
+		
+		source += throw_on_error ? "true" : "false";
+		
+		source += ", 'errorColor': '" + Configurable::get("error-color");
+		
+		source += "'});";
+		
+		return source;
 	}
 	
 	std::string Math::_escape(std::string source) const

@@ -6,6 +6,10 @@ It's super complex, much more so than $1 + 1$. According to Mr. Ramanujan, this 
 
 $\frac{1}{\pi} = \frac{2\sqrt{2}}{9801} \sum^\infty_{k=0} \frac{(4k)!(1103+26390k)}{(k!)^4 396^{4k}}.$
 
+Here is a faulty equation:
+
+$\frc{4}{2}$
+
 More math:
 
 $$\frac{1}{\Bigl(\sqrt{\phi \sqrt{5}}-\phi\Bigr) e^{\frac25 \pi}} = 1+\frac{e^{-2\pi}} {1+\frac{e^{-4\pi}} {1+\frac{e^{-6\pi}} {1+\frac{e^{-8\pi}} {1+\cdots} } } }$$

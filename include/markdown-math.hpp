@@ -25,6 +25,8 @@ namespace Markdown
 	*	@details Uses <a href="khan.github.io/KaTeX">KaTeX</a>.
 	*			 Configuration (key : values [default]):
 	*			 + all-display-math	: (true | false) [false]
+	*			 + throw			: (true | false) [true]
+	*			 + error-color		: (#hex-color) 	 [#CC0000]
 	*
 	***************************************************************************/
 
