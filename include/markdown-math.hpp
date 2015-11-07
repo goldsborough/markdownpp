@@ -11,6 +11,7 @@
 
 #include "markdown-abstract-math.hpp"
 
+#include <memory>
 #include <stdexcept>
 #include <string>
 #include <v8.h>

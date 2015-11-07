@@ -1,5 +1,6 @@
 #include "markdown-math.hpp"
 
+#include <cstring>
 #include <cstdlib>
 #include <fstream>
 #include <libplatform/libplatform.h>

@@ -12,6 +12,7 @@
 #include "markdown-abstract-markdown.hpp"
 
 #include <cstdint>
+#include <memory>
 #include <string>
 
 struct hoedown_buffer;
