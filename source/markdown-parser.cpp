@@ -2,6 +2,7 @@
 
 #include "markdown-abstract-markdown.hpp"
 #include "markdown-abstract-math.hpp"
+#include "markdown-exceptions.hpp"
 #include "markdown-markdown.hpp"
 #include "markdown-math.hpp"
 
@@ -50,10 +51,10 @@ namespace Markdown
 				   const std::string& stylesheet_path,
 				   const Configurable::settings_t& settings)
 	: Configurable(settings)
-	, _markdown(std::make_unique<Markdown>())
-	, _math(std::make_unique<Math>())
-	, _stylesheet(stylesheet_path)
 	, _root(root)
+	, _markdown(std::make_unique<Markdown>())
+	, _math(std::make_unique<Math>(_join_paths({"katex"})))
+	, _stylesheet(stylesheet_path)
 	{ }
 	
 	Parser::Parser(std::unique_ptr<AbstractMarkdown> markdown_engine,

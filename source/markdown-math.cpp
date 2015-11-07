@@ -1,5 +1,7 @@
 #include "markdown-math.hpp"
+#include "markdown-exceptions.hpp"
 
+#include <boost/filesystem.hpp>
 #include <cstring>
 #include <cstdlib>
 #include <fstream>
@@ -13,9 +15,11 @@ namespace Markdown
 		{"all-display-math", "0"}
 	};
 	
-	Math::Math(const Configurable::settings_t& settings)
+	Math::Math(const std::string& katex_path,
+			   const Configurable::settings_t& settings)
 	: AbstractMath(settings)
 	, _isolate(_new_isolate())
+	, _katex_path(katex_path)
 	{		
 		v8::HandleScope handle_scope(_isolate);
 		
@@ -88,6 +92,26 @@ namespace Markdown
 		std::string html = *static_cast<v8::String::Utf8Value>(value);
 		
 		return "<span class='math'>\n" + html + "</span>\n";
+	}
+	
+	const std::string& Math::katex_path() const noexcept
+	{
+		return _katex_path;
+	}
+	
+	void Math::katex_path(const std::string& path)
+	{
+		_katex_path = path;
+		
+		v8::Isolate::Scope isolate_scope(_isolate);
+		
+		v8::HandleScope handle_scope(_isolate);
+		
+		// Get a local context handle from the persistent handle.
+		auto context = v8::Local<v8::Context>::New(_isolate,
+												   _persistent_context);
+		
+		_load_katex(context);
 	}
 	
 	v8::Isolate* Math::_new_isolate() const
@@ -177,15 +201,22 @@ namespace Markdown
 	
 	void Math::_load_katex(const v8::Local<v8::Context>& context) const
 	{
-		std::ifstream file("../../katex/katex.min.js");
+		auto path = boost::filesystem::path(_katex_path);
+		
+		path /= boost::filesystem::path("katex.min.js");
+		
+		std::ifstream file(path.string());
+		
+		if (! file)
+		{
+			throw FileException("Could not load katex.min.js!");
+		}
 		
 		std::string source;
-		std::string input;
 		
-		while (std::getline(file, input))
-		{
-			source += input + " ";
-		}
+		std::copy(std::istreambuf_iterator<char>{file},
+				  std::istreambuf_iterator<char>{},
+				  std::back_inserter(source));
 		
 		_run(source, context);
 	}

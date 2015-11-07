@@ -32,14 +32,6 @@ namespace Markdown
 	{
 	public:
 		
-		/*! Thrown when the LaTeX expression could not be rendered by KaTeX. */
-		struct ParseException : public std::runtime_error
-		{
-			ParseException(const std::string& what)
-			: std::runtime_error(what)
-			{ }
-		};
-		
 		/*! The default settings for this math engine. */
 		static const Configurable::settings_t default_settings;
 		
@@ -47,11 +39,14 @@ namespace Markdown
 		*
  		*	@brief Constructs a new Math engine.
 		*
+		*	@param katex_path The path to the katex folder.
+		*
 		*	@param settings The settings for the Math engine.
 		*
 		***********************************************************************/
 		
-		Math(const Configurable::settings_t& settings = default_settings);
+		Math(const std::string& katex_path = ".",
+			 const Configurable::settings_t& settings = default_settings);
 		
 		/*******************************************************************//*!
 		*
@@ -127,6 +122,11 @@ namespace Markdown
 		
 		virtual std::string render(const std::string& expression,
 								   bool display_math = false) override;
+		
+		
+		virtual const std::string& katex_path() const noexcept;
+		
+		virtual void katex_path(const std::string& path);
 		
 		
 	private:
@@ -234,12 +234,14 @@ namespace Markdown
 		
 		/*! The virtual environment in which the V8 runs. */
 		v8::Isolate* _isolate;
-		
 	
 		/*! A persistent (i.e. non-expiring/global) handle
 		    to the context in which the instance interacts
 		    with the V8 engine. */
 		v8::UniquePersistent<v8::Context> _persistent_context;
+		
+		/*! The path to the katex directory. */
+		std::string _katex_path;
 		
 	};
 	

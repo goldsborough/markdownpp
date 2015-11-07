@@ -28,24 +28,6 @@ namespace Markdown
 		/*! Data type used for storing settings. */
 		using settings_t = std::unordered_map<std::string, std::string>;
 		
-		/*! An exception thrown when a requested key is not available. */
-		struct ConfigurationKeyException : public std::invalid_argument
-		{
-			ConfigurationKeyException(const std::string& key)
-			: std::invalid_argument("No such key '" + key + "'!")
-			{ }
-		};
-		
-		/*! An exception thrown when an invalid value is supplied for a key. */
-		struct ConfigurationValueException : public std::invalid_argument
-		{
-			ConfigurationValueException(const std::string& key,
-										const std::string& value)
-			: std::invalid_argument("Invalid value '" + value + 
-									"' for key '" + key + "'!")
-			{ }
-		};
-		
 		/*******************************************************************//*!
 		*
 		*	@brief Initializes members of the Configurable class.

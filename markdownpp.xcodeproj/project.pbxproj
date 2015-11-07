@@ -49,6 +49,7 @@
 		7A1FFCC21BD7DA5600FD092F /* markdown-markdown.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "markdown-markdown.cpp"; sourceTree = "<group>"; };
 		7A1FFCC41BD7DA6000FD092F /* markdown-parser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "markdown-parser.cpp"; sourceTree = "<group>"; };
 		7A1FFCC71BD7DA7100FD092F /* markdown-math.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "markdown-math.cpp"; sourceTree = "<group>"; };
+		7A3D77011BEE485200AC5BB3 /* markdown-exceptions.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = "markdown-exceptions.hpp"; sourceTree = "<group>"; };
 		7A7016051BE2C69200662E38 /* libv8_libplatform.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libv8_libplatform.a; path = ../../../../../usr/local/Cellar/v8/4.5.103.35/lib/libv8_libplatform.a; sourceTree = "<group>"; };
 		7A7016061BE2C69200662E38 /* libv8.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libv8.dylib; path = ../../../../../usr/local/Cellar/v8/4.5.103.35/lib/libv8.dylib; sourceTree = "<group>"; };
 		7A7016091BE2C74800662E38 /* libv8_base.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libv8_base.a; path = ../../../../../usr/local/Cellar/v8/4.5.103.35/lib/libv8_base.a; sourceTree = "<group>"; };
@@ -140,6 +141,7 @@
 				7A1FFCBC1BD7C94900FD092F /* markdown-markdown.hpp */,
 				7A1FFCBE1BD7D29C00FD092F /* markdown-math.hpp */,
 				7A1FFCBD1BD7CA5400FD092F /* markdown-parser.hpp */,
+				7A3D77011BEE485200AC5BB3 /* markdown-exceptions.hpp */,
 			);
 			path = include;
 			sourceTree = "<group>";

@@ -51,14 +51,6 @@ namespace Markdown
 	{
 	public:
 		
-		/*! Thrown when a file could not be opened. */
-		struct FileException : public std::runtime_error
-		{
-			FileException(const std::string& what)
-			: std::runtime_error(what)
-			{ }
-		};
-		
 		/*! The default settings for a Parser. */
 		static const Configurable::settings_t default_settings;
 		
@@ -555,7 +547,10 @@ namespace Markdown
 		virtual inline std::string
 		_escape_script(const std::string& raw_script) const;
 		
-	
+		
+		/*! The root directory path. */
+		std::string _root;
+		
 		/*! The markdown-engine in use. */
 		std::unique_ptr<AbstractMarkdown> _markdown;
 
@@ -567,9 +562,6 @@ namespace Markdown
 		
 		/*! The accumulated custom CSS. */
 		std::string _custom_css;
-		
-		/*! The root directory path. */
-		std::string _root;
 	};
 }
 

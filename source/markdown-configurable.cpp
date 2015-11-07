@@ -1,4 +1,5 @@
 #include "markdown-configurable.hpp"
+#include "markdown-exceptions.hpp"
 
 namespace Markdown
 {	
