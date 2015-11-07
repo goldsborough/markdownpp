@@ -162,7 +162,7 @@ namespace Markdown
 			return html;
 		}
 		
-		else return _markdown->render(markdown);
+		return _markdown->render(markdown);
 	}
 	
 	void Parser::stylesheet(const std::string& path)

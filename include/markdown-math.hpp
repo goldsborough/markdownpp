@@ -125,11 +125,23 @@ namespace Markdown
 		virtual std::string render(const std::string& expression,
 								   bool display_math = false) override;
 		
+		/*******************************************************************//*!
+		*
+		*	@brief Returns the currently-set KaTeX path.
+		*
+		***********************************************************************/
 		
 		virtual const std::string& katex_path() const noexcept;
 		
-		virtual void katex_path(const std::string& path);
+		/*******************************************************************//*!
+		*
+		*	@brief Sets the path to the KaTeX directory.
+		*
+		*	@param path The new path to the KaTeX directory.
+		*
+		***********************************************************************/
 		
+		virtual void katex_path(const std::string& path);
 		
 	private:
 		
@@ -230,6 +242,8 @@ namespace Markdown
 		***********************************************************************/
 		
 		void _load_katex(const v8::Local<v8::Context>& context) const;
+		
+		std::string _handle_error(const std::string& expression) const;
 		
 		/*! A instance of the Allocator struct for the V8 engine. */
 		mutable Allocator _allocator;

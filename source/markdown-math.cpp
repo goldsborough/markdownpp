@@ -5,7 +5,9 @@
 #include <cstring>
 #include <cstdlib>
 #include <fstream>
+#include <iostream>
 #include <libplatform/libplatform.h>
+#include <regex>
 
 namespace Markdown
 {
@@ -14,7 +16,8 @@ namespace Markdown
 	const Configurable::settings_t Math::default_settings = {
 		{"all-display-math", "0"},
 		{"throw-on-error", "1"},
-		{"error-color", "##CC0000"}
+		{"error-color", "#CC0000"},
+		{"log-errors", "1"}
 	};
 	
 	Math::Math(const std::string& katex_path,
@@ -37,7 +40,7 @@ namespace Markdown
 	}
 	
 	Math::Math(const Math& other)
-	: Math()
+	: Math(other._katex_path)
 	{ }
 	
 	Math::Math(Math&& other) noexcept
@@ -89,7 +92,22 @@ namespace Markdown
 		
 		auto source = _get_javascript(expression, display_math);
 		
-		auto value = _run(source, context);
+		v8::Local<v8::Value> value;
+		
+		try
+		{
+			value = _run(source, context);
+		}
+		
+		catch(const ParseException& exception)
+		{
+			if (! Configurable::get<bool>("throw-on-error"))
+			{
+				return _handle_error(expression);
+			}
+			
+			else throw exception;
+		}
 		
 		std::string html = *static_cast<v8::String::Utf8Value>(value);
 		
@@ -176,39 +194,20 @@ namespace Markdown
 		// 		 1		    |	  1		   |   1
 		display_math |= Configurable::get<bool>("all-display-math");
 		
-		source += display_math ? "true" : "false";
-		
-		source += ", 'throwOnError': ";
-		
-		bool throw_on_error = Configurable::get<bool>("throw-on-error");
-		
-		source += throw_on_error ? "true" : "false";
-		
-		source += ", 'errorColor': '" + Configurable::get("error-color");
-		
-		source += "'});";
+		source += display_math ? "true})" : "false})";
 		
 		return source;
 	}
 	
 	std::string Math::_escape(std::string source) const
 	{
-		for (auto i = source.begin(); i != source.end(); )
-		{
-			if (*i == '\\')
-			{
-				i = source.insert(i, '\\');
-				
-				std::advance(i, 2);
-			}
-			
-			else if (*i == '\n' || *i == '\t')
-			{
-				i = source.erase(i);
-			}
-			
-			else ++i;
-		}
+		static const std::regex bad_backslashes("(?:\\\\)+(\\s|$)");
+		static const std::regex good_backslashes("\\\\");
+		static const std::regex space("[\\t\\n]+");
+		
+		source = std::regex_replace(source, bad_backslashes, "$1");
+		source = std::regex_replace(source, good_backslashes, "\\\\");
+		source = std::regex_replace(source, space, "");
 		
 		return source;
 	}
@@ -233,6 +232,24 @@ namespace Markdown
 				  std::back_inserter(source));
 		
 		_run(source, context);
+	}
+	
+	std::string Math::_handle_error(const std::string &expression) const
+	{
+		if (Configurable::get<bool>("log-errors"))
+		{
+			std::clog << "Could not parse expression '"
+			<< expression
+			<< "'!\n";
+		}
+		
+		std::string html = "<span style='color: ";
+		
+		html += Configurable::get("error-color");
+		
+		html += "'>" + expression + "</span>";
+		
+		return html;
 	}
 	
 	void* Math::Allocator::Allocate(std::size_t length)

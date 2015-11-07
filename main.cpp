@@ -1,5 +1,7 @@
 #include "markdown-parser.hpp"
 
+#include "include/markdown-abstract-math.hpp"
+
 #include <boost/program_options.hpp>
 #include <iostream>
 

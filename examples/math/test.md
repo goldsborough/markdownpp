@@ -8,7 +8,7 @@ $\frac{1}{\pi} = \frac{2\sqrt{2}}{9801} \sum^\infty_{k=0} \frac{(4k)!(1103+26390
 
 Here is a faulty equation:
 
-$\frc{4}{2}$
+$\frac$
 
 More math:
 

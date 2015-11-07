@@ -8,7 +8,7 @@ int main(int argc, const char* argv[])
 
 	// Don't throw exceptions, just mark
 	// faulty equations in a special color
-	parser.math().configure("throw-on-error", "false");
+	parser.math().configure("throw-on-error", false);
 
 	// Set the "faulty-equation" color to blue
 	parser.math().configure("error-color", "#0000FF");
