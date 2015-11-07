@@ -26,6 +26,8 @@ namespace Markdown
 	{
 	public:
 		
+		using Configurable::settings;
+		
 		/*! For flags such as 'ENABLE_TABLES'. */
 		using flags_t = unsigned short;
 		
