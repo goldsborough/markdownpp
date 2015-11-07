@@ -70,7 +70,7 @@ namespace Markdown
 	
 	auto Markdown::_load_extensions() const
 	{
-		flags_t extensions;
+		flags_t extensions = 0;
 		
 		if (get<bool>("tables")) extensions |= Flags::TABLES;
 		
