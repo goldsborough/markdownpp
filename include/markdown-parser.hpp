@@ -44,6 +44,7 @@ namespace Markdown
 	*			 + markdown-style 	: (see themes/markdown) [github]
 	*			 + code-style		: (see themes/code/style) [solarized-dark]
 	*			 + include-mode		: (embed|local|network) [network]
+	*			 + file-protocol	: (true | false) [false]
 	*
 	***************************************************************************/
 	

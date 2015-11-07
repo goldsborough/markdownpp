@@ -24,7 +24,8 @@ namespace Markdown
 		{"enable-code", "1"},
 		{"markdown-style", "github"},
 		{"code-style", "solarized-dark"},
-		{"include-mode", "network"}
+		{"include-mode", "network"},
+		{"file-protocol", "0"}
 	};
 	
 	const Parser::tag_t Parser::_link = {
@@ -278,7 +279,16 @@ namespace Markdown
 		
 		else if(include_mode == "local")
 		{
-			return _make_tag(_link, _join_paths({path, "style.css"}));
+			std::string full_path;
+			
+			if (Configurable::get<bool>("file-protocol"))
+			{
+				full_path += "file://";
+			}
+			
+			full_path += _join_paths({path, "style.css"});
+			
+			return _make_tag(_link, full_path);
 		}
 		
 		else if (include_mode == "network")
@@ -306,7 +316,14 @@ namespace Markdown
 		
 		else if(include_mode == "local")
 		{
-			auto full_path = _join_paths({path, "script.js"});
+			std::string full_path;
+			
+			if (Configurable::get<bool>("file-protocol"))
+			{
+				full_path += "file://";
+			}
+			
+			full_path += _join_paths({path, "script.js"});
 			
 			return _make_tag(_external_script, full_path);
 		}
